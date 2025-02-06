@@ -1,0 +1,89 @@
+
+:root {
+    --primary-color: #ff6b6b;
+    --secondary-color: #f06595;
+    --light-bg: #f0f0f0;
+    --light-text: #121212;
+    --dark-bg: #1b1b1b;
+    --dark-text: #f0f0f0;
+    --highlight-bg: rgba(255, 255, 255, 0.08);
+}
+/* Estilos comunes para la tarjeta de proyecto */
+.project-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+    width: 280px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilos del fondo y sombra según el modo */
+  .home-container.light .project-card {
+    background-color: var(--light-bg); /* Fondo claro para el modo claro */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave en modo claro */
+  }
+  
+  .home-container.dark .project-card {
+    background-color: #0f0f0f !important; /* Fondo oscuro para el modo oscuro */
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1); /* Sombra suave en modo oscuro */
+  }
+  
+  /* Estilo de título */
+  .project-card h3 {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+  }
+  
+  /* Descripción del proyecto */
+  .project-card p {
+    font-size: 1rem;
+    color: var(--light-text);
+    opacity: 0.85;
+    line-height: 1.5;
+  }
+  
+  /* Transición de la tarjeta al pasar el ratón (hover) */
+  .project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.12); /* Fondo sutil en hover para ambos modos */
+  }
+
+  .project-card.dark {
+    background-color: var(--dark-bg);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Modo Oscuro */
+  .home-container.dark .project-card h3 {
+    color: var(--primary-color); /* Mantenemos el color del título en el modo oscuro */
+  }
+  
+  .home-container.dark .project-card p {
+    color: white; /* Aseguramos que el texto sea legible en modo oscuro */
+    opacity: 0.9;
+  }
+  
+  /* Estilo para la sección de proyectos en modo oscuro */
+  .home-container.dark .projects-section {
+    background-color: var(--dark-bg); /* Fondo oscuro para la sección de proyectos */
+  }
+  
+  /* Ajustes responsive */
+  @media (max-width: 768px) {
+    .project-card {
+      width: 90%;
+      margin-bottom: 1rem;
+    }
+  
+    .project-card h3 {
+      font-size: 1.2rem;
+    }
+  }
+  

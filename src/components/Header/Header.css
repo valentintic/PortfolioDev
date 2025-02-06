@@ -1,120 +1,127 @@
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: var(--background-color);
-    transition: background-color 0.3s ease;
-  }
-  
-  .home {
-    background-color: #f9f9f9;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .header.dark {
-    background-color: #333;
-    color: #fff;
-  }
-  
-  nav {
-    display: flex;
-    gap: 1.5rem;
-  }
-  
-  nav a {
-    text-decoration: none;
-    color: inherit;
-    font-weight: 600;
-    transition: color 0.3s ease;
-  }
-  
-  nav a:hover {
-    color: #ff6600;
-  }
-  
-  .theme-toggle {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: inherit;
-    transition: transform 0.3s ease;
-  }
-  
-  .theme-toggle:hover {
-    transform: scale(1.2);
-  }
-  
-  .active-link {
-    color: #ff6600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 2rem;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+/* Se asegura de que el contenido no quede oculto detrás del header */
+body {
+  margin-top: 80px;
+}
+
+.header.dark {
+  background-color: #2c2c2c;
+  color: #f0f0f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.header.light {
+  background-color: #f4f4f4;
+  color: #222;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-item a {
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: inherit;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+  padding-bottom: 4px;
+}
+
+.nav-item a:hover {
+  color: #ff6600;
+}
+
+.active-link {
+  border-bottom: 2px solid #ff6600;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: inherit;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.2);
+}
+
+.language-selector {
+  display: flex;
+  gap: 0.5rem;
+  margin-right: 50px;
+}
+
+.language-btn {
+  background-color: transparent;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.language-btn:hover {
+  background-color: #ff6600;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0.5rem 1rem;
   }
 
-  /* Modo claro */
-header.light {
-    background-color: #f4f4f4;
-    color: #000;
+  .nav-links {
+    gap: 1rem;
   }
-  
-  header.light .theme-toggle {
-    color: #000;
-  }
-  
-  header.light nav a {
-    color: #000;
-  }
-  
-  header.light nav a:hover {
-    color: #ff6600;
-  }
-  
-  /* Modo oscuro */
-  header.dark {
-    background-color: #333;
-    color: #fff;
-  }
-  
-  header.dark .theme-toggle {
-    color: #fff;
-  }
-  
-  header.dark nav a {
-    color: #fff;
-  }
-  
-  header.dark nav a:hover {
-    color: #ff6600;
-  }
-  
-  /* Estilos del botón de cambio de tema */
-  .theme-toggle {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-  }
-  
-  .theme-toggle:hover {
-    transform: scale(1.2);
-  }
-  
-  /* Selector de idioma */
-  .language-selector button {
-    margin-left: 10px;
-    padding: 5px 10px;
+
+  .nav-item a {
     font-size: 1rem;
-    cursor: pointer;
-    background-color: transparent;
-    border: 1px solid #ccc;
-    border-radius: 4px;
   }
-  
-  .language-selector button:hover {
-    background-color: #ddd;
+
+  .theme-toggle {
+    font-size: 1.3rem;
   }
-  
-  
-  
+}
+
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.5rem 1rem;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+  }
+
+  .header-controls {
+    align-self: flex-end;
+  }
+}

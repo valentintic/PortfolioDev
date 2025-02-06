@@ -1,28 +1,14 @@
-import ProjectCard from '../../components/ProjectCard/ProjectCard'
-import './Projects.css'
+// ProjectCard.jsx
+import React from 'react';
+import './ProjectCard.css';
 
-const Projects = () => {
-  const projects = [
-    {
-      title: "E-commerce",
-      description: "Plataforma de ventas online",
-      tech: ["React", "Node.js", "MongoDB"],
-      demo: "#",
-      code: "#"
-    }
-    // Más proyectos...
-  ]
-
+const ProjectCard = ({ title, description, darkMode }) => {
   return (
-    <div className="projects-container">
-      <h2>Mis Proyectos</h2>
-      <div className="projects-grid">
-        {projects.map((project, index) => (
-          <ProjectCard key={index} {...project} />
-        ))}
-      </div>
+    <div className={`project-card ${darkMode ? 'dark' : 'light'}`}>
+      <h3>{title}</h3>
+      <p>{description}</p>
     </div>
-  )
-}
+  );
+};
 
-export default Projects
+export default ProjectCard;

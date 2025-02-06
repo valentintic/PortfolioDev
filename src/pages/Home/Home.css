@@ -1,0 +1,289 @@
+/* ============================
+   Reset & Variables
+============================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+:root {
+    /* Colores para modo claro */
+    --bg-color-light: #f9f9f9;
+    --text-color-light: #333;
+    /* Colores para modo oscuro */
+    --bg-color-dark: #1f1f1f;
+    --text-color-dark: #f9f9f9;
+    /* Colores primarios */
+    --primary-color: #ff6b6b;
+    --secondary-color: #f06595;
+    --light-bg: #f0f0f0;
+}
+
+/* Asignación de variables según tema */
+.home-container.light {
+    --bg-color: var(--bg-color-light);
+    --text-color: var(--text-color-light);
+}
+
+.home-container.dark {
+    --bg-color: var(--bg-color-dark);
+    --text-color: var(--text-color-dark);
+}
+
+/* ============================
+   Estilos Globales
+============================ */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    width: 100%;
+}
+
+/* Ajuste para encabezado fijo */
+.home-container {
+    background-color: var(--bg-color) !important;
+    color: var(--text-color);
+    display: flex;
+    max-height: 1080px;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* ============================
+   Sección Hero
+============================ */
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2rem 1rem;
+    text-align: center;
+    min-height: 60vh;
+    background-color: var(--bg-color); /* Ajuste de color de fondo */
+}
+
+.hero-content {
+    width: 100%;
+}
+
+/* Título con degradado (Full Stack Developer) */
+.gradient-text {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientAnimation 3s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 200% center;
+    }
+    100% {
+        background-position: -200% center;
+    }
+}
+
+/* Párrafo descriptivo */
+.hero-section p {
+    font-size: 1.125rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Botón de llamada a la acción */
+.cta-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.125rem;
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.cta-button:hover {
+    transform: scale(1.05);
+}
+
+/* ============================
+   Sección de Habilidades
+============================ */
+.skills-section {
+    padding: 2rem 1rem;
+    text-align: center;
+    background-color: var(--bg-color); /* Ajuste de color de fondo */
+}
+
+.skills-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.skill-card {
+    background-color: var(--light-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    width: 150px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    text-align: center;
+}
+
+.skill-card:hover {
+    transform: scale(1.05);
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.skill-card.active {
+    border: 2px solid var(--primary-color);
+}
+
+.skill-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+/* ============================
+   Sección de Proyectos
+============================ */
+.projects-section {
+    padding: 2rem 1rem;
+    text-align: center;
+    background-color: var(--bg-color); /* Ajuste de color de fondo */
+}
+
+.projects-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.projects-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 250px));
+    gap: 7.5rem;
+    justify-content: center;
+}
+
+/* ============================
+   Sección de contacto, si la tienes, también debería incluirse
+============================ */
+.contact-section {
+    padding: 2rem 1rem;
+    text-align: center;
+    background-color: var(--bg-color); /* Ajuste de color de fondo */
+}
+
+/* ============================
+   Responsive: Mobile First
+============================ */
+/* Para pantallas medianas (min-width: 600px) */
+@media (min-width: 600px) {
+    .hero-section {
+        padding: 3rem 2rem;
+    }
+    .gradient-text {
+        font-size: 3rem;
+    }
+    .cta-button {
+        font-size: 1.25rem;
+    }
+    .hero-section p {
+        font-size: 1.25rem;
+    }
+}
+
+/* Para pantallas grandes (min-width: 1024px) */
+@media (min-width: 1024px) {
+    .hero-section {
+        padding: 4rem 3rem;
+    }
+    .gradient-text {
+        font-size: 3.5rem;
+    }
+    .skills-section h2,
+    .projects-section h2 {
+        font-size: 2.5rem;
+    }
+    .skill-card {
+        width: 180px;
+    }
+    .cta-button {
+        font-size: 1.5rem;
+    }
+    .hero-section p {
+        font-size: 1.375rem;
+    }
+}
+
+/* ============================
+   Ajustes para anchos hasta 572px
+============================ */
+@media (max-width: 572px) {
+    .home-container {
+        margin-top: 150px;
+        padding: 0;
+    }
+    .hero-section {
+        padding: 1rem 0.5rem;
+        min-height: calc(100vh - 350px);
+    }
+    .gradient-text {
+        font-size: 2rem;
+    }
+    .cta-button {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+    }
+    .hero-section p {
+        font-size: 1rem;
+    }
+    .skills-section,
+    .projects-section {
+        padding: 1.5rem 0.5rem;
+    }
+    .projects-container {
+        gap: 2rem;
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+/* ============================
+   Ajustes generales para el fondo de las secciones
+============================ */
+section {
+    background-color: var(--bg-color); /* Se asegura de que todas las secciones tengan el fondo correcto */
+}
+
+/* ============================
+   Cambio de color según el modo claro/oscuro
+============================ */
+@media (prefers-color-scheme: dark) {
+    .home-container {
+        --bg-color: var(--bg-color-dark);
+        --text-color: var(--text-color-dark);
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    .home-container {
+        --bg-color: var(--bg-color-light);
+        --text-color: var(--text-color-light);
+    }
+}

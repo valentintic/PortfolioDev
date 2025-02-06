@@ -1,0 +1,11 @@
+/* BitText.css */
+.bit-text {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  
+  .bit-letter {
+    display: inline-block;
+  }
+  
