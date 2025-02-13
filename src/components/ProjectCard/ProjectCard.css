@@ -22,6 +22,8 @@
   gap: 9.5rem;
   margin: 0 auto;
   padding: 1rem;
+  background-color: var(--bg-color);
+  width: 100%;
 }
 
 
