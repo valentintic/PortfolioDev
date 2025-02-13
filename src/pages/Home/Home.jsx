@@ -1,45 +1,79 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FaCode, FaServer, FaDatabase } from 'react-icons/fa';
+import { FaServer, FaDatabase } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import BitText from '../../components/BitText';
 import ProjectCard from '../../components/ProjectCard/ProjectCard';
+import ContactForm from '../../components/ContactForm/ContactForm';
 import './Home.css';
+import { FaLinkedin, FaGithub, FaCode } from 'react-icons/fa';
 
 const skillsData = {
   frontend: [
-    { title: 'Dietas Interface', description: 'Una interfaz dinamica para la gestión de dietas.' },
-    { title: 'E-Commerce', description: 'Tienda online con carrito y pagos.' },
+    { 
+      title: 'Dietas Interface', 
+      description: 'Una interfaz dinámica para la gestión de dietas.',
+      images: [
+        'https://picsum.photos/id/180/400/300',
+        'https://picsum.photos/id/181/400/300',
+        'https://picsum.photos/id/182/400/300'
+      ]
+    },
+    { 
+      title: 'E-Commerce', 
+      description: 'Tienda online con carrito y pagos.',
+      images: [
+        'https://picsum.photos/id/190/400/300',
+        'https://picsum.photos/id/191/400/300',
+        'https://picsum.photos/id/192/400/300'
+      ]
+    },
   ],
   backend: [
-    { title: 'API REST Node.js', description: 'API segura y escalable con Express.' },
-    { title: 'Auth Service', description: 'Sistema de autenticación con JWT.' },
+    { 
+      title: 'API REST Node.js', 
+      description: 'API segura y escalable con Express.',
+      images: [
+        'https://picsum.photos/id/200/400/300',
+        'https://picsum.photos/id/201/400/300',
+        'https://picsum.photos/id/202/400/300'
+      ]
+    },
+    { 
+      title: 'Auth Service', 
+      description: 'Sistema de autenticación con JWT.',
+      images: [
+        'https://picsum.photos/id/210/400/300',
+        'https://picsum.photos/id/211/400/300',
+        'https://picsum.photos/id/212/400/300'
+      ]
+    },
   ],
   database: [
-    { title: 'Gestor de Inventarios', description: 'App con PostgreSQL y Sequelize.' },
-    { title: 'Big Data Analytics', description: 'Análisis de datos con MongoDB.' },
+    { 
+      title: 'Gestor de Inventarios', 
+      description: 'App con PostgreSQL y Sequelize.',
+      images: [
+        'https://picsum.photos/id/220/400/300',
+        'https://picsum.photos/id/221/400/300',
+        'https://picsum.photos/id/222/400/300'
+      ]
+    },
+    { 
+      title: 'Big Data Analytics', 
+      description: 'Análisis de datos con MongoDB.',
+      images: [
+        'https://picsum.photos/id/230/400/300',
+        'https://picsum.photos/id/231/400/300',
+        'https://picsum.photos/id/232/400/300'
+      ]
+    },
   ],
 };
 
 const Home = ({ darkMode }) => {
   const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState('frontend');
-  const [githubData, setGithubData] = useState(null);
-
-  useEffect(() => {
-    // Función para obtener datos de GitHub
-    const fetchGithubData = async () => {
-      try {
-        const response = await fetch('https://api.github.com/users/valentinpreutesei');
-        const data = await response.json();
-        setGithubData(data);
-      } catch (error) {
-        console.error('Error al obtener datos de GitHub:', error);
-      }
-    };
-
-    fetchGithubData();
-  }, []);
 
   return (
     <motion.div
@@ -82,31 +116,65 @@ const Home = ({ darkMode }) => {
   animate={{ opacity: 1 }}
   transition={{ duration: 1 }}
 >
-  <h2 className="section-title">Sobre mí</h2>
+  <h2 className="section-title">Perfil Profesional</h2>
   <p className="intro-text">
-    Soy un Desarrollador Full Stack con amplia experiencia en la construcción de aplicaciones web escalables y optimizadas. Mi enfoque se centra en la arquitectura de software, rendimiento y automatización, aplicando buenas prácticas y metodologías modernas.
+    Desarrollador Full Stack especializado en arquitecturas cloud-native con 2+ años de experiencia construyendo soluciones escalables. 
+    Experto en React y Spring Boot, he liderado implementaciones en AWS y Kubernetes para Anadat Technology, optimizando 
+    rendimiento en un 40% mediante arquitecturas serverless. Combinando mi formación en Tajamar con certificaciones en 
+    Azure y Power Platform, desarrollo aplicaciones full-stack con enfoque en seguridad y escalabilidad.
   </p>
+
   <div className="skills-cards">
     <div className="skill-card">
-      <h3>Desarrollo Full Stack</h3>
-      <p>React.js, Vue.js, ASP.NET Core y Spring Boot.</p>
+      <h3>🛠 Tech Stack Principal</h3>
+      <p>
+        <strong>Frontend:</strong> React 18, Vue.js 3, Angular 15+<br/>
+        <strong>Backend:</strong> Java 21, Spring Boot 3, ASP.NET Core<br/>
+        <strong>Cloud:</strong> AWS (EC2, S3, Lambda), Azure DevOps, Terraform<br/>
+        <strong>DB:</strong> MySQL, MongoDB, Oracle Cloud
+      </p>
     </div>
+
     <div className="skill-card">
-      <h3>Cloud Computing & DevOps</h3>
-      <p>AWS, Azure, Kubernetes y Terraform.</p>
+      <h3>🚀 Experiencia Clave</h3>
+      <p>
+        • Arquitectura de microservicios para HelOps (Spring Boot + React)<br/>
+        • Implementación CI/CD con GitHub Actions y AWS CodePipeline<br/>
+        • Sistema de reconocimiento facial con PyTorch (95% precisión)<br/>
+        • Integración OAuth 2.0 + Google Fit API para app de nutrición
+      </p>
     </div>
+
     <div className="skill-card">
-      <h3>Aplicaciones Inteligentes</h3>
-      <p>ML.NET, Computer Vision y PyTorch.</p>
+      <h3>🏆 Logros Recientes</h3>
+      <p>
+        • Reducción de costos AWS en 35% mediante auto-scaling groups<br/>
+        • Mejor rendimiento API (de 1200ms a 450ms latency)<br/>
+        • Certificación PL-400: Microsoft Power Platform<br/>
+        • 500+ puntos Codewars (Algoritmos avanzados)
+      </p>
     </div>
   </div>
-  <p className="contact-info">
-    <strong>Contacto:</strong> valentinpreutesei@outlook.es
-  </p>
-  <div className="social-links">
-    <a href="https://linkedin.com/in/valentinpreutesei/">LinkedIn</a>
-    <a href="https://github.com/valentintic">GitHub</a>
-    <a href="https://www.codewars.com/users/Valentin.ps">Codewars</a>
+
+  <div className="contact-info">
+    <strong>Contacto Directo:</strong><br/>
+    <a href="mailto:valentinpreutesei@outlook.es" className="email-link">
+      valentinpreutesei@outlook.es
+    </a> | 
+    <a href="tel:+34603148970" className="phone-link">
+      +34 603 14 89 70
+    </a>
+    <div className="social-links">
+    <a href="https://linkedin.com/in/valentinpreutesei/" target="_blank" rel="noopener noreferrer">
+    <FaLinkedin className="icon" /> Perfil LinkedIn
+    </a>
+    <a href="https://github.com/valentintic" target="_blank" rel="noopener noreferrer">
+    <FaGithub className="icon" /> GitHub
+    </a>
+    <a href="https://www.codewars.com/users/Valentin.ps" target="_blank" rel="noopener noreferrer" >
+    <FaCode className="icon" /> {/* Para Codewars */} CodeWars
+    </a>
+  </div>
   </div>
 </motion.section>
 
@@ -141,18 +209,26 @@ const Home = ({ darkMode }) => {
       
 
       {/* Sección de Proyectos */}
+      <div className="projects-container">
+        {skillsData[selectedCategory].map((project, index) => (
+          <ProjectCard 
+            key={index}
+            {...project}
+            darkMode={darkMode}
+            images={project.images}
+          />
+        ))}
+      </div>
+
+      {/* Sección de Contacto */}
       <motion.section
-        className="projects-section"
-        initial={{ x: '100vw', opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 1, type: 'spring', stiffness: 120 }}
+        className="contact-section"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
       >
-        <h2>{t('Proyectos Destacados')}</h2>
-        <div className="projects-container">
-          {skillsData[selectedCategory].map((project, index) => (
-            <ProjectCard key={index} {...project} darkMode={darkMode} />
-          ))}
-        </div>
+        <h2>{t('Contacto')}</h2>
+        <ContactForm />
       </motion.section>
 
     </motion.div>

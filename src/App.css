@@ -1,5 +1,28 @@
+/* Variables comunes */
+:root {
+  --primary-color: #ff6b6b;
+  --secondary-color: #f06595;
+  --card-bg-light: #f0f0f0;
+  --card-bg-dark: #2a2a2a;
+}
+
+/* Modo claro */
+.app.light {
+  --bg-color: #f9f9f9;
+  --text-color: #333;
+  --card-bg: var(--card-bg-light);
+}
+
+/* Modo oscuro */
+.app.dark {
+  --bg-color: #1f1f1f;
+  --text-color: #f9f9f9;
+  --card-bg: var(--card-bg-dark);
+}
+
 /* Aseguramos que el body y html ocupen toda la altura */
 html, body {
+  max-height: 1920px;
   height: 100%;
   margin: 0;
   font-family: Arial, sans-serif;
@@ -16,282 +39,12 @@ html, body {
 
 /* Modo claro */
 .app.light {
-  background-color: #fff;
-  color: #000;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 /* Modo oscuro */
 .app.dark {
-  background-color: #747474;
-  color: #f0f0f0;
-}
-
-/* ---------------------- */
-/*        HEADER        */
-/* ---------------------- */
-
-header {
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-/* Header en modo oscuro */
-header.dark {
-  background-color: #222;
-  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
-}
-
-/* Header en modo claro */
-header.light {
-  background-color: #f8f8f8;
-}
-
-/* Estilo de los enlaces del Header */
-.nav-links {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: inherit;
-  font-weight: 600;
-  transition: color 0.3s ease, border-bottom 0.3s ease;
-  padding-bottom: 4px;
-}
-
-.nav-links a:hover {
-  color: #ff6600;
-}
-
-.nav-links a.active-link {
-  border-bottom: 2px solid #ff6600;
-}
-
-/* Controles del Header (tema e idiomas) */
-.header-controls {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-/* Botón para el cambio de tema */
-.theme-toggle {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: inherit;
-  transition: transform 0.3s ease;
-}
-
-.theme-toggle:hover {
-  transform: scale(1.2);
-}
-
-/* Botones para cambio de idioma */
-.language-selector {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.language-selector button {
-  background: none;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  font-weight: bold;
-  color: inherit;
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
-  transition: background-color 0.3s ease, transform 0.2s;
-}
-
-.language-selector button:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-  transform: scale(1.05);
-}
-
-/* ---------------------- */
-/*       CONTENIDO      */
-/* ---------------------- */
-
-/* Contenedor principal para el contenido de las páginas */
-main {
-  flex: 1; /* Ocupa el espacio restante debajo del header */
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  margin-top: 80px; /* Espacio para el header fijo */
-}
-
-/* Estilos para Home */
-.home {
-  background-color: #f9f9f9 !important;
-  padding: 2rem;
-  border-radius: 8px;
-}
-
-.app.dark .home {
-  background-color: #444;
-}
-
-/* ---------------------- */
-/*   ESTILOS DE COMPONENTES */
-/* ---------------------- */
-
-/* Botón de llamada a la acción */
-.cta-button {
-  margin-top: 1.5rem;
-  padding: 0.75rem 1.5rem;
-  font-size: 1.2rem;
-  border: none;
-  border-radius: 8px;
-  background-color: #ff6600;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s;
-}
-
-.cta-button:hover {
-  background-color: #e65c00;
-  transform: scale(1.05);
-}
-
-/* Sección de habilidades */
-.skills-section {
-  padding: 2rem;
-  text-align: center;
-}
-
-.skills-container {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  margin-top: 1.5rem;
-}
-
-.skill-card {
-  background-color: var(--light-bg);
-  padding: 1rem;
-  border-radius: 8px;
-  width: 150px;
-  transition: transform 0.3s, background-color 0.3s;
-}
-
-.app.dark .skill-card {
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
-.skill-icon {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-/* Estilos para títulos con gradiente */
-.gradient-text {
-  font-size: 3rem;
-  font-weight: bold;
-  background: linear-gradient(45deg, #ff6b6b, #f06595);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* ---------------------- */
-/*    RESPONSIVE        */
-/* ---------------------- */
-
-/* Para pantallas medianas (máx 768px) */
-@media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    padding: 1rem;
-  }
-
-  .nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 0.5rem;
-  }
-
-  .header-controls {
-    margin-top: 0.5rem;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  main {
-    padding: 1rem;
-    margin-top: 100px; /* Espacio adicional si el header se extiende */
-  }
-
-  .cta-button {
-    font-size: 1rem;
-    padding: 0.6rem 1.2rem;
-  }
-
-  .gradient-text {
-    font-size: 2.5rem;
-  }
-
-  .skills-container {
-    gap: 1rem;
-  }
-
-  .skill-card {
-    width: 130px;
-    padding: 0.8rem;
-  }
-}
-
-/* Para pantallas pequeñas (máx 480px) */
-@media (max-width: 480px) {
-  header {
-    padding: 0.5rem;
-  }
-
-  .nav-links {
-    gap: 0.5rem;
-    font-size: 0.9rem;
-  }
-
-  .header-controls {
-    gap: 0.5rem;
-  }
-
-  main {
-    padding: 0.5rem;
-    margin-top: 120px; /* Espacio adicional para header en dispositivos muy pequeños */
-  }
-
-  .cta-button {
-    font-size: 0.9rem;
-    padding: 0.5rem 1rem;
-  }
-
-  .gradient-text {
-    font-size: 2rem;
-  }
-
-  .skills-section {
-    padding: 1rem;
-  }
-
-  .skill-card {
-    width: 110px;
-    padding: 0.6rem;
-  }
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }

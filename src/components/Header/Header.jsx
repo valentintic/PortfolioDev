@@ -3,8 +3,11 @@ import { motion } from 'framer-motion';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import { useTranslation } from 'react-i18next';
 import './Header.css';
+import { useState } from 'react';
 
+// Header.jsx
 const Header = ({ darkMode, setDarkMode }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { t, i18n } = useTranslation();
 
   const links = [
@@ -15,63 +18,83 @@ const Header = ({ darkMode, setDarkMode }) => {
 
   const handleLanguageChange = (lang) => {
     i18n.changeLanguage(lang);
+    setIsMenuOpen(false);
   };
 
   return (
-    <motion.header 
+    <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ type: 'spring', stiffness: 100 }}
+      transition={{ type: 'spring', stiffness: 120 }}
       className={`header ${darkMode ? 'dark' : 'light'}`}
     >
-      <nav className="nav-links">
-        {links.map((link, index) => (
-          <motion.div
+      {/* Logo o nombre */}
+      <div className="logo">Valentin Preutesei</div>
+
+      {/* Menú Desktop */}
+      <nav className="desktop-nav">
+        {links.map((link) => (
+          <NavLink 
             key={link.path}
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.15 }}
-            className="nav-item"
+            to={link.path}
+            className={({ isActive }) => 
+              `nav-link ${isActive ? 'active' : ''}`
+            }
           >
-            <NavLink 
-              to={link.path} 
-              className={({ isActive }) => isActive ? "active-link" : ""}
-            >
-              {link.name}
-            </NavLink>
-          </motion.div>
+            {link.name}
+          </NavLink>
         ))}
       </nav>
-      
-      <div className="header-controls">
-        <motion.button 
-          onClick={() => setDarkMode(!darkMode)}
-          className="theme-toggle"
-          aria-label={t('changeTheme')}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-        >
-          {darkMode ? <FiMoon /> : <FiSun />}
-        </motion.button>
 
+      {/* Controles */}
+      <div className="controls">
         <div className="language-selector">
-          <motion.button 
+          <button
             onClick={() => handleLanguageChange('es')}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="language-btn"
+            className={`lang-btn ${i18n.language === 'es' ? 'active-lang' : ''}`}
           >
             ES
-          </motion.button>
-          <motion.button 
+          </button>
+          <button
             onClick={() => handleLanguageChange('en')}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="language-btn"
+            className={`lang-btn ${i18n.language === 'en' ? 'active-lang' : ''}`}
           >
             EN
-          </motion.button>
+          </button>
         </div>
+
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className="theme-btn"
+        >
+          {darkMode ? <FiMoon /> : <FiSun />}
+        </button>
+
+        {/* Hamburguesa solo mobile */}
+        <button 
+          className={`hamburger ${isMenuOpen ? 'open' : ''}`}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      {/* Menú Mobile */}
+      <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
+        {links.map((link) => (
+          <NavLink 
+            key={link.path}
+            to={link.path}
+            className={({ isActive }) => 
+              `mobile-link ${isActive ? 'active' : ''}`
+            }
+            onClick={() => setIsMenuOpen(false)}
+          >
+            {link.name}
+          </NavLink>
+        ))}
       </div>
     </motion.header>
   );

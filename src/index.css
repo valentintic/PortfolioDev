@@ -1,18 +1,51 @@
+/* Variables base para ambos temas */
 :root {
+  /* Modo claro */
+  --bg-color-light: #f9f9f9;
+  --text-color-light: #333;
+  /* Modo oscuro */
+  --bg-color-dark: #1f1f1f;
+  --text-color-dark: #f9f9f9;
+
+  /* Variables utilizadas en el sitio (por defecto: modo claro) */
+  --bg-color: var(--bg-color-light);
+  --text-color: var(--text-color-light);
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
+  /* Indicamos que soportamos ambos esquemas */
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* Usamos las variables para el color y fondo */
+  color: var(--text-color);
+  background-color: var(--bg-color);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Añadir una transición para cambios suaves en el esquema */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Si el usuario prefiere modo oscuro, se sobrescriben las variables */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: var(--bg-color-dark);
+    --text-color: var(--text-color-dark);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-color: var(--bg-color-light);
+    --text-color: var(--text-color-light);
+  }
+}
+
+/* Estilos globales */
 a {
   font-weight: 500;
   color: #646cff;
@@ -42,7 +75,8 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  /* Puedes definir un color de fondo específico para botones o reutilizar el de fondo */
+  background-color: var(--bg-color);
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -52,17 +86,4 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }

@@ -7,7 +7,6 @@
     box-sizing: border-box;
 }
 
-
 :root {
     /* Colores para modo claro */
     --bg-color-light: #f9f9f9;
@@ -18,18 +17,11 @@
     /* Colores primarios */
     --primary-color: #ff6b6b;
     --secondary-color: #f06595;
-    --light-bg: #f0f0f0;
-}
-
-/* Asignación de variables según tema */
-.home-container.light {
-    --bg-color: var(--bg-color-light);
-    --text-color: var(--text-color-light);
-}
-
-.home-container.dark {
-    --bg-color: var(--bg-color-dark);
-    --text-color: var(--text-color-dark);
+    /* Fondos para tarjetas */
+    --card-bg-light: #f0f0f0;
+    --card-bg-dark: #2a2a2a;
+    /* Fondo de tarjeta por defecto */
+    --card-bg: var(--card-bg-light);
 }
 
 /* ============================
@@ -45,12 +37,11 @@ body {
 
 /* Ajuste para encabezado fijo */
 .home-container {
-    background-color: var(--bg-color) !important;
+    background-color: var(--bg-color);
     color: var(--text-color);
     display: flex;
     max-height: 1080px;
     flex-direction: column;
-    gap: 2rem;
 }
 
 /* ============================
@@ -63,7 +54,8 @@ body {
     flex-direction: column;
     padding: 2rem 1rem;
     text-align: center;
-    min-height: 60vh;
+    min-height: 35vh;
+    margin-top: 100px;
     background-color: var(--bg-color); /* Ajuste de color de fondo */
 }
 
@@ -121,7 +113,7 @@ body {
 .skills-section {
     padding: 2rem 1rem;
     text-align: center;
-    background-color: var(--bg-color); /* Ajuste de color de fondo */
+    background-color: var(--bg-color);
 }
 
 .skills-section h2 {
@@ -137,7 +129,7 @@ body {
 }
 
 .skill-card {
-    background-color: var(--light-bg);
+    background-color: var(--card-bg);
     padding: 1rem;
     border-radius: 8px;
     width: 150px;
@@ -161,33 +153,12 @@ body {
 }
 
 /* ============================
-   Sección de Proyectos
-============================ */
-.projects-section {
-    padding: 2rem 1rem;
-    text-align: center;
-    background-color: var(--bg-color); /* Ajuste de color de fondo */
-}
-
-.projects-section h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-}
-
-.projects-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 250px));
-    gap: 7.5rem;
-    justify-content: center;
-}
-
-/* ============================
-   Sección de contacto, si la tienes, también debería incluirse
+   Sección de Contacto
 ============================ */
 .contact-section {
     padding: 2rem 1rem;
     text-align: center;
-    background-color: var(--bg-color); /* Ajuste de color de fondo */
+    background-color: var(--bg-color);
 }
 
 /* ============================
@@ -232,9 +203,7 @@ body {
     }
 }
 
-/* ============================
-   Ajustes para anchos hasta 572px
-============================ */
+/* Ajustes para anchos hasta 572px */
 @media (max-width: 572px) {
     .home-container {
         margin-top: 150px;
@@ -242,7 +211,6 @@ body {
     }
     .hero-section {
         padding: 1rem 0.5rem;
-        min-height: calc(100vh - 350px);
     }
     .gradient-text {
         font-size: 2rem;
@@ -260,7 +228,7 @@ body {
     }
     .projects-container {
         gap: 2rem;
-        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
@@ -268,16 +236,18 @@ body {
    Ajustes generales para el fondo de las secciones
 ============================ */
 section {
-    background-color: var(--bg-color); /* Se asegura de que todas las secciones tengan el fondo correcto */
+    background-color: var(--bg-color);
 }
 
 /* ============================
    Cambio de color según el modo claro/oscuro
 ============================ */
+/* Basado en las preferencias del sistema */
 @media (prefers-color-scheme: dark) {
     .home-container {
         --bg-color: var(--bg-color-dark);
         --text-color: var(--text-color-dark);
+        --card-bg: var(--card-bg-dark);
     }
 }
 
@@ -285,5 +255,182 @@ section {
     .home-container {
         --bg-color: var(--bg-color-light);
         --text-color: var(--text-color-light);
+        --card-bg: var(--card-bg-light);
     }
 }
+/* Manual theme toggle overrides (colocados al final para mayor prioridad) */
+.home-container.light {
+    --bg-color: var(--bg-color-light);
+    --text-color: var(--text-color-light);
+    --card-bg: var(--card-bg-light);
+}
+
+.home-container.dark {
+    --bg-color: var(--bg-color-dark);
+    --text-color: var(--text-color-dark);
+    --card-bg: var(--card-bg-dark);
+}
+
+
+/* ============================
+   Sección Sobre Mí
+============================ */
+.about-me-section {
+    padding: 2rem 1rem;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .section-title {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+    color: var(--primary-color);
+    
+    &::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      margin: 0.5rem auto;
+      animation: gradientAnimation 3s linear infinite;
+    }
+  }
+  
+  .intro-text {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    line-height: 1.7;
+    max-width: 800px;
+    margin: 0 auto 2.5rem;
+    text-align: center;
+    color: var(--text-color);
+  }
+  
+  .skills-cards {
+    display: flex;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 5rem;
+    margin-bottom: 3rem;
+    justify-content: center;
+  }
+  
+  .skill-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    width: 25%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    
+    h3 {
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+    }
+    
+    p {
+      color: var(--text-color);
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+  }
+  
+  .contact-info {
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--card-bg);
+    border-radius: 8px;
+    font-size: 1.1rem;
+    
+    strong {
+      color: var(--primary-color);
+    }
+  }
+  
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    
+    a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      padding: 0.5rem 0;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        transition: width 0.3s ease;
+      }
+      
+      &:hover::after {
+        width: 100%;
+      }
+    }
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .skills-cards {
+        display: grid;
+        gap: 2.5rem;
+      grid-template-columns: 1fr;
+    }
+    
+    .skill-card {
+      width: 100%;
+    }
+    
+    .social-links {
+      gap: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .about-me-section {
+      padding: 1.5rem 0.5rem;
+    }
+    
+    .contact-info {
+      font-size: 0.9rem;
+    }
+  }
+
+  .email-link, .phone-link {
+    color: var(--primary-color);
+    transition: opacity 0.3s ease;
+    
+    &:hover {
+      opacity: 0.8;
+      text-decoration: underline;
+    }
+  }
+  
+  .skill-card h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  /* Iconos (usar tu librería de iconos preferida) */
+  .svg-icon {
+    width: 24px;
+    height: 24px;
+    fill: var(--primary-color);
+  }
