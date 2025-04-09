@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiGithub, FiExternalLink, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { FiGithub, FiExternalLink, FiInfo } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import './ProjectCard.css';
 
-const ProjectCard = ({ title, description, technologies, darkMode, liveUrl, codeUrl, images }) => {
+const ProjectCard = ({ id, title, description, technologies, darkMode, liveUrl, codeUrl, images }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const handleNext = () => {
     setCurrentImageIndex((prev) => (prev + 1) % images.length);
   };
+
+  const hasImages = images && images.length > 0;
+
+  images = images || [];
 
   const handlePrev = () => {
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
@@ -22,15 +27,21 @@ const ProjectCard = ({ title, description, technologies, darkMode, liveUrl, code
       transition={{ duration: 0.4 }}
       whileHover={{ y: -10 }}
     >
-      <div className="image-carousel">
+      <div className="image-carousel-home">
         <div className="carousel-inner">
           {images.map((img, index) => (
             <img
               key={index}
               src={img}
-              alt={`${title} screenshot ${index + 1}`}
+              alt={`screenshot ${index + 1}`}
               className={`carousel-image ${index === currentImageIndex ? 'active' : ''}`}
-              loading={index === 0 ? 'eager' : 'lazy'}
+              initial={{ opacity: 0 }}
+              animate={{ 
+                opacity: index === currentImageIndex ? 1 : 0,
+                scale: index === currentImageIndex ? 1 : 0.95
+              }}
+              onClick={() => openLightbox(index)}
+              transition={{ duration: 0.5 }}
             />
           ))}
         </div>
@@ -55,28 +66,38 @@ const ProjectCard = ({ title, description, technologies, darkMode, liveUrl, code
         </div>
 
         <div className="card-links">
-          {codeUrl && (
-            <motion.a 
-              href={codeUrl} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              aria-label="View code"
+          <motion.div className="links-wrapper">
+            {codeUrl && (
+              <motion.a 
+                href={codeUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="View code"
+                whileHover={{ scale: 1.1 }}
+              >
+                <FiGithub className="link-icon" />
+              </motion.a>
+            )}
+            {liveUrl && (
+              <motion.a 
+                href={liveUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="Live demo"
+                whileHover={{ scale: 1.1 }}
+              >
+                <FiExternalLink className="link-icon" />
+              </motion.a>
+            )}
+            <motion.div 
               whileHover={{ scale: 1.1 }}
+              className="project-details-link"
             >
-              <FiGithub className="link-icon" />
-            </motion.a>
-          )}
-          {liveUrl && (
-            <motion.a 
-              href={liveUrl} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              aria-label="Live demo"
-              whileHover={{ scale: 1.1 }}
-            >
-              <FiExternalLink className="link-icon" />
-            </motion.a>
-          )}
+              <Link to={`/proyectos/${id}`} aria-label="Ver detalles del proyecto">
+                <FiInfo className="link-icon" />
+              </Link>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
 
@@ -96,6 +117,16 @@ const ProjectCard = ({ title, description, technologies, darkMode, liveUrl, code
         </div>
 
         <p className="card-description">{description}</p>
+        
+        <motion.div 
+          className="view-details-button"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+        >
+          <Link to={`/proyectos/${id}`} className="details-link">
+            Ver detalles
+          </Link>
+        </motion.div>
       </div>
     </motion.div>
   );

@@ -1,44 +1,86 @@
-/* Header.css */
+/* ============================
+   Header Styles - Mejorado
+============================ */
 .header {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
-  padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--bg-color);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 1.2rem 3rem;
   z-index: 1000;
+  transition: all 0.4s ease;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
 }
 
+/* Efecto de scroll - agregar clase con JavaScript */
+.header.scrolled {
+  padding: 0.8rem 3rem;
+  box-shadow: 0 3px 20px rgba(0, 0, 0, 0.12);
+  background-color: var(--bg-color-translucent);
+}
+
+/* Logo styling */
 .logo {
+  font-size: 1.6rem;
   font-weight: 700;
-  font-size: 1.3rem;
-  color: var(--primary-color);
+  letter-spacing: -0.02em;
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color, #6366f1));
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientAnimation 6s ease infinite;
+  position: relative;
 }
 
+.logo::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 30%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-color), transparent);
+  border-radius: 3px;
+}
+
+/* Desktop navigation */
 .desktop-nav {
-  display: none;
-  gap: 2rem;
+  display: flex;
+  gap: 2.5rem;
 }
 
 .nav-link {
+  text-decoration: none;
   color: var(--text-color);
-  position: relative;
+  font-weight: 500;
   padding: 0.5rem 0;
-  transition: color 0.3s ease;
+  position: relative;
+  transition: all 0.3s ease;
+  letter-spacing: 0.02em;
 }
 
 .nav-link::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: -4px;
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--primary-color);
-  transition: width 0.3s ease;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  transition: width 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+  border-radius: 1px;
+}
+
+.nav-link:hover {
+  color: var(--primary-color);
 }
 
 .nav-link:hover::after,
@@ -46,144 +88,273 @@
   width: 100%;
 }
 
+.nav-link.active {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+/* Controls section */
 .controls {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.8rem;
 }
 
+/* Language selector */
 .language-selector {
   display: flex;
-  gap: 0.5rem;
-  border-right: 1px solid var(--border-color);
-  padding-right: 1rem;
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 24px;
+  padding: 0.2rem;
+  margin-right: 0.5rem;
+}
+
+.header.dark .language-selector {
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .lang-btn {
   background: none;
   border: none;
-  color: var(--text-color);
+  font-size: 0.85rem;
+  font-weight: 600;
   cursor: pointer;
+  padding: 0.35rem 0.8rem;
+  color: var(--text-color);
   opacity: 0.7;
-  transition: opacity 0.3s ease;
+  transition: all 0.25s ease;
+  border-radius: 20px;
+}
+
+.lang-btn:hover {
+  opacity: 1;
 }
 
 .lang-btn.active-lang {
   opacity: 1;
-  font-weight: 500;
+  background: var(--bg-color);
+  color: var(--primary-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
+.header.dark .lang-btn.active-lang {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Theme button */
 .theme-btn {
   background: none;
   border: none;
-  color: var(--text-color);
+  font-size: 1.3rem;
   cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 20%;
-  transition: background 0.3s ease;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.header.dark .theme-btn {
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .theme-btn:hover {
-  background: rgba(var(--primary-color-rgb), 0.1);
+  transform: rotate(15deg) scale(1.05);
+  background: rgba(var(--primary-color-rgb), 0.15);
+  color: var(--primary-color);
 }
 
-/* Menú Mobile */
+.header.dark .theme-btn:hover {
+  background: rgba(var(--primary-color-rgb), 0.25);
+}
+
+/* Hamburger menu */
 .hamburger {
-  display: flex;
+  display: none;
   flex-direction: column;
-  gap: 5px;
-  background: none;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  background: transparent;
   border: none;
-  padding: 0.5rem;
   cursor: pointer;
-  z-index: 1001;
+  padding: 0;
+  z-index: 10;
 }
 
 .hamburger span {
-  width: 25px;
+  display: block;
+  width: 100%;
   height: 2px;
-  background: var(--text-color);
-  transition: all 0.3s ease;
+  background-color: var(--text-color);
+  border-radius: 4px;
+  transition: all 0.35s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-.hamburger.open span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
+.hamburger.open span:first-child {
+  transform: translateY(9px) rotate(45deg);
+  background-color: var(--primary-color);
 }
 
 .hamburger.open span:nth-child(2) {
   opacity: 0;
+  transform: translateX(-10px);
 }
 
-.hamburger.open span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
+.hamburger.open span:last-child {
+  transform: translateY(-9px) rotate(-45deg);
+  background-color: var(--primary-color);
 }
 
+/* Mobile menu */
 .mobile-menu {
+  display: none;
   position: fixed;
-  top: 0;
-  right: -100%;
-  width: 70%;
-  height: 40vh;
-  background-color: #161515;
-  padding: 6rem 2rem 2rem;
-  display: flex;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background-color: var(--bg-color);
   flex-direction: column;
-  gap: 1.5rem;
-  border-radius: 0px 0px 0px 40px;
-  transition: right 0.3s ease;
-  padding: 6rem 4rem 2rem;
-  box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  padding: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .mobile-menu.open {
-  right: 0;
+  height: auto;
+  padding: 2rem 0;
+  opacity: 1;
+  visibility: visible;
 }
 
 .mobile-link {
+  text-decoration: none;
   color: var(--text-color);
-  padding: 1rem;
-  border-radius: 8px;
-  transition: background 0.3s ease;
-}
-
-.mobile-link.active {
-  color: var(--primary-color);
   font-weight: 500;
+  padding: 1.2rem;
+  width: 100%;
+  text-align: center;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.mobile-link:hover {
-  background: rgba(var(--primary-color-rgb), 0.05);
+.mobile-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  transition: width 0.3s ease;
+  transform: translateX(0%);
+  margin: 0 auto;
+  right: 0;
 }
 
-/* Responsive */
-@media (min-width: 768px) {
+.mobile-link:hover,
+.mobile-link.active {
+  background-color: rgba(var(--primary-color-rgb), 0.08);
+  color: var(--primary-color);
+}
+
+.mobile-link:hover::after,
+.mobile-link.active::after {
+  width: 80%;
+}
+
+/* ============================
+   Variables CSS adicionales
+============================ */
+:root {
+  --bg-color-translucent: rgba(255, 255, 255, 0.9);
+  --primary-color-rgb: 79, 70, 229; /* Convertir el color primario a RGB */
+}
+
+.dark {
+  --bg-color-translucent: var(--bg-color);
+}
+
+/* ============================
+   Responsive styles
+============================ */
+@media (max-width: 768px) {
+  .header {
+    padding: 1rem 1.5rem;
+  }
+  
   .desktop-nav {
-    display: flex;
+    display: none;
   }
   
   .hamburger {
-    display: none;
+    display: flex;
   }
   
   .mobile-menu {
-    display: none;
+    display: flex;
+  }
+  
+  .logo {
+    font-size: 1.3rem;
+  }
+  
+  .header.scrolled {
+    padding: 0.7rem 1.5rem;
+  }
+  
+  .controls {
+    gap: 1.2rem;
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 480px) {
   .header {
-    padding: 1rem;
+    padding: 0.9rem 1.2rem;
+  }
+  
+  .controls {
+    gap: 1rem;
   }
   
   .language-selector {
-    display: none;
+    margin-right: 0;
   }
   
-  .mobile-menu .language-selector {
-    display: flex;
-    margin-top: auto;
-    border: none;
-    padding: 0;
-    justify-content: center;
+  .lang-btn {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+  }
+  
+  .logo {
+    font-size: 1.2rem;
+  }
+  
+  .theme-btn {
+    padding: 0.5rem;
+    font-size: 1.2rem;
+  }
+}
+
+/* Animación de gradiente mejorada */
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }

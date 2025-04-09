@@ -1,50 +1,157 @@
-/* Variables comunes */
+/* ============================
+   App Container Styles
+============================ */
 :root {
-  --primary-color: #ff6b6b;
-  --secondary-color: #f06595;
-  --card-bg-light: #f0f0f0;
-  --card-bg-dark: #2a2a2a;
-}
-
-/* Modo claro */
-.app.light {
-  --bg-color: #f9f9f9;
-  --text-color: #333;
-  --card-bg: var(--card-bg-light);
-}
-
-/* Modo oscuro */
-.app.dark {
-  --bg-color: #1f1f1f;
-  --text-color: #f9f9f9;
-  --card-bg: var(--card-bg-dark);
-}
-
-/* Aseguramos que el body y html ocupen toda la altura */
-html, body {
-  max-height: 1920px;
-  height: 100%;
-  margin: 0;
-  font-family: Arial, sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* La aplicación debe ocupar toda la altura de la ventana */
-.app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Modo claro */
-.app.light {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-}
-
-/* Modo oscuro */
-.app.dark {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-}
+    /* Colores para modo claro */
+    --bg-color-light: #f9f9f9;
+    --text-color-light: #333;
+    /* Colores para modo oscuro */
+    --bg-color-dark: #1f1f1f;
+    --text-color-dark: #f9f9f9;
+    /* Colores primarios */
+    --primary-color: #ff6b6b;
+    --secondary-color: #f06595;
+    /* Fondos para tarjetas */
+    --card-bg-light: #f0f0f0;
+    --card-bg-dark: #2a2a2a;
+    /* Fondo de tarjeta por defecto */
+    --card-bg: var(--card-bg-light);
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  
+  .app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Theme variations */
+  .app.light {
+    --bg-color: var(--bg-color-light);
+    --text-color: var(--text-color-light);
+    --card-bg: var(--card-bg-light);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+  
+  .app.dark {
+    --bg-color: var(--bg-color-dark);
+    --text-color: var(--text-color-dark);
+    --card-bg: var(--card-bg-dark);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+  
+  /* Main content area */
+  main {
+    flex: 1;
+    padding-top: 80px; /* Adjust based on your header height */
+    width: 100%;
+  }
+  
+  /* Animation for page transitions */
+  .page-transition-enter {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  .page-transition-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms, transform 300ms;
+  }
+  
+  .page-transition-exit {
+    opacity: 1;
+  }
+  
+  .page-transition-exit-active {
+    opacity: 0;
+    transition: opacity 300ms;
+  }
+  
+  /* Improved scrollbar for light mode */
+  .app.light::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .app.light::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  .app.light::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 5px;
+  }
+  
+  .app.light::-webkit-scrollbar-thumb:hover {
+    background: #ccc;
+  }
+  
+  /* Improved scrollbar for dark mode */
+  .app.dark::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .app.dark::-webkit-scrollbar-track {
+    background: #2a2a2a;
+  }
+  
+  .app.dark::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 5px;
+  }
+  
+  .app.dark::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
+  /* Links default styling */
+  a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  a:hover {
+    color: var(--secondary-color);
+  }
+  
+  /* Focus outline for accessibility */
+  :focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+  
+  /* Helper classes */
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    main {
+      padding-top: 70px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    main {
+      padding-top: 60px;
+    }
+  }

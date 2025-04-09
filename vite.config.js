@@ -2,10 +2,13 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react()],define: {
+    'process.env': {}
+  },
+  envPrefix: ['VITE_', 'REACT_APP_'],
   server: {
-    host: '0.0.0.0', // Allows access from other devices
-    port: 5173, // Default Vite port (change if needed)
-    strictPort: true,
+    host: '0.0.0.0', // Permite conexiones externas
+    port: 5173, // Usa este puerto
+    strictPort: true, // Evita cambios de puerto automáticos
   },
 })
