@@ -150,7 +150,7 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
       // 2. Parámetros para la notificación (template_645ay7j)
       // Este template también usa: name, email, message, title
       const notificationParams = {
-        name: "valentinpreutesei@outlook.es",
+        name: formState.email,
         email: "valentinpreutesei@outlook.es",
         message: formState.message,
         title: "Nuevo mensaje desde el Portfolio",

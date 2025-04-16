@@ -1,157 +1,673 @@
-/* ============================
-   App Container Styles
-============================ */
 :root {
-    /* Colores para modo claro */
-    --bg-color-light: #f9f9f9;
-    --text-color-light: #333;
-    /* Colores para modo oscuro */
-    --bg-color-dark: #1f1f1f;
-    --text-color-dark: #f9f9f9;
-    /* Colores primarios */
-    --primary-color: #ff6b6b;
-    --secondary-color: #f06595;
-    /* Fondos para tarjetas */
-    --card-bg-light: #f0f0f0;
-    --card-bg-dark: #2a2a2a;
-    /* Fondo de tarjeta por defecto */
-    --card-bg: var(--card-bg-light);
-  }
+  /* Colores para modo claro */
+  --bg-color-light: #e1eefb;
+  --text-color-light: #333;
+  /* Colores para modo oscuro - más oscuro para mayor contraste */
+  --bg-color-dark: #030613;
+  --text-color-dark: #f9f9f9;
+  /* Colores primarios */
+  --primary-color: #ff6b6b;
+  --secondary-color: #f06595;
+  /* Fondos para tarjetas */
+  --card-bg-light: rgba(255, 255, 255, 0.9);
+  --card-bg-dark: rgba(15, 20, 35, 0.85);
+  /* Fondo de tarjeta por defecto */
+  --card-bg: var(--card-bg-light);
   
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: 'Arial', sans-serif;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-  
-  .app {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  /* Theme variations */
-  .app.light {
-    --bg-color: var(--bg-color-light);
-    --text-color: var(--text-color-light);
-    --card-bg: var(--card-bg-light);
-    background-color: var(--bg-color);
-    color: var(--text-color);
-  }
-  
-  .app.dark {
-    --bg-color: var(--bg-color-dark);
-    --text-color: var(--text-color-dark);
-    --card-bg: var(--card-bg-dark);
-    background-color: var(--bg-color);
-    color: var(--text-color);
-  }
-  
-  /* Main content area */
-  main {
-    flex: 1;
-    padding-top: 80px; /* Adjust based on your header height */
-    width: 100%;
-  }
-  
-  /* Animation for page transitions */
-  .page-transition-enter {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  
-  .page-transition-enter-active {
-    opacity: 1;
+  /* Variables para el espacio */
+  --star-density: 800px; /* Ajusta la densidad de estrellas */
+  --nebula-opacity-dark: 0.85;
+  --nebula-opacity-light: 0.7;
+
+  /* Añadir variables para colores de galaxias */
+  --galaxy-core-1: rgba(255, 255, 200, 0.9);
+  --galaxy-core-2: rgba(255, 245, 210, 0.7);
+  --galaxy-dust-blue: rgba(63, 81, 181, 0.25);
+  --galaxy-dust-purple: rgba(103, 58, 183, 0.22);
+  --galaxy-dust-pink: rgba(233, 30, 99, 0.15);
+  --galaxy-dust-red: rgba(211, 47, 47, 0.18);
+  --galaxy-dust-yellow: rgba(255, 235, 59, 0.12);
+
+  /* Colores refinados para la Vía Láctea */
+  --galaxy-core: rgba(255, 248, 225, 0.95);
+  --galaxy-bar: rgba(255, 245, 190, 0.7);
+  --galaxy-arm-1: rgba(120, 160, 255, 0.3);
+  --galaxy-arm-2: rgba(200, 140, 255, 0.3);
+  --galaxy-arm-3: rgba(255, 170, 130, 0.25);
+  --galaxy-arm-4: rgba(140, 220, 255, 0.3);
+  --galaxy-dust: rgba(180, 180, 220, 0.1);
+  --star-formation-pink: rgba(255, 150, 180, 0.4);
+  --star-formation-blue: rgba(140, 180, 255, 0.35);
+  --dust-lane: rgba(70, 50, 80, 0.2);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+  /* Prevenir rebote en iOS */
+  -webkit-overflow-scrolling: touch;
+}
+
+.app {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* Usar will-change para mejorar rendimiento en animaciones */
+  will-change: color, background-color;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  overflow-x: hidden;
+}
+
+/* ============================
+   Cosmic Background - Optimizado
+============================ */
+.cosmic-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  /* Optimización para dispositivos móviles */
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* ===== Campo estelar optimizado ===== */
+/* Técnica de estrellas estáticas basadas en CSS puro */
+.star-field {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Estrellas para modo oscuro - Alta densidad y realismo */
+.app.dark .cosmic-background:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  background-image: 
+    radial-gradient(1px 1px at 25px 5px, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 50px 25px, rgba(255, 255, 255, 0.8), rgba(0, 0, 0, 0)),
+    radial-gradient(1.5px 1.5px at 125px 20px, rgba(255, 255, 255, 1), rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 50px 75px, rgba(255, 255, 255, 0.7), rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 15px 125px, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0)),
+    radial-gradient(2.5px 2.5px at 110px 80px, rgba(255, 255, 255, 1), rgba(0, 0, 0, 0));
+  background-size: var(--star-density) var(--star-density);
+  background-repeat: repeat;
+  transform: translateZ(0);
+  animation: starScroll 250s linear infinite;
+  /* Acelerar por hardware para mejorar rendimiento */
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  z-index: 0; /* Asegurarse que esté por debajo de las galaxias */
+}
+
+.cosmic-background:before {
+  z-index: 0; /* Asegurar que las estrellas estén por debajo */
+}
+
+.cosmic-background:after {
+  z-index: 0; /* Asegurar que la segunda capa de estrellas esté por debajo */
+}
+
+/* Segunda capa de estrellas para efecto parallax en modo oscuro */
+.app.dark .cosmic-background:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  background-image: 
+    radial-gradient(1px 1px at 75px 35px, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0)),
+    radial-gradient(1.5px 1.5px at 150px 130px, rgba(255, 255, 255, 1), rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 250px 60px, rgba(255, 255, 255, 0.8), rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 200px 95px, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0));
+  background-size: calc(var(--star-density) * 1.5) calc(var(--star-density) * 1.5);
+  background-repeat: repeat;
+  transform: translateZ(0);
+  animation: starScrollSlow 350s linear infinite;
+  /* Acelerar por hardware para mejorar rendimiento */
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+}
+
+/* Estrellas para modo claro - Sutiles y suaves */
+.app.light .cosmic-background:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  background-image: 
+    radial-gradient(1px 1px at 50px 100px, rgba(255, 255, 255, 0.7), rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 150px 150px, rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0)),
+    radial-gradient(1.5px 1.5px at 220px 70px, rgba(255, 255, 255, 0.8), rgba(0, 0, 0, 0));
+  background-size: calc(var(--star-density) * 2) calc(var(--star-density) * 2);
+  background-repeat: repeat;
+  opacity: 0.5;
+  animation: starScrollLight 300s linear infinite;
+}
+
+/* Animaciones de movimiento de estrellas - optimizadas */
+@keyframes starScroll {
+  from {
     transform: translateY(0);
-    transition: opacity 300ms, transform 300ms;
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes starScrollSlow {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-33.33%);
+  }
+}
+
+@keyframes starScrollLight {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+/* ===== Nebulosas optimizadas para rendimiento ===== */
+.nebula-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease;
+  will-change: transform, opacity;
+  opacity: 0;
+  pointer-events: none; /* Permite interactuar con elementos debajo */
+}
+
+.nebula-far {
+  opacity: var(--nebula-opacity-dark);
+  z-index: 1;
+}
+
+.nebula-mid {
+  opacity: 0.8;
+  z-index: 2;
+}
+
+.nebula-near {
+  opacity: 0.65;
+  z-index: 2; /* Reducido de 3 a 2 para no competir con la galaxia */
+}
+
+/* ===== Estrellas brillantes con mejor rendimiento ===== */
+.bright-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 7; /* Aumentado para estar por encima, solo como puntos */
+}
+
+.bright-star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background-color: #fff;
+  border-radius: 50%;
+  animation: brightStar 8s infinite ease-in-out;
+  z-index: 10;
+  will-change: opacity, transform, box-shadow;
+}
+
+/* Reducimos los pseudo-elementos para mejorar rendimiento */
+.bright-star::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 15px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  animation: flare 8s infinite ease-in-out;
+  will-change: opacity, width;
+}
+
+@keyframes brightStar {
+  0%, 100% { 
+    transform: scale(1); 
+    box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.7); 
+  }
+  50% { 
+    transform: scale(1.4); 
+    box-shadow: 0 0 15px 3px rgba(255, 255, 255, 0.9), 0 0 30px 8px rgba(255, 255, 255, 0.3); 
+  }
+}
+
+@keyframes flare {
+  0%, 25%, 75%, 100% { opacity: 0; width: 0; }
+  50% { opacity: 0.8; width: 20px; }
+}
+
+/* ============================
+   Tema Oscuro - Espacio Realista
+============================ */
+.app.dark {
+  --bg-color: var(--bg-color-dark);
+  --text-color: var(--text-color-dark);
+  --card-bg: var(--card-bg-dark);
+  /* Colores realistas basados en astrofotografías */
+  background: linear-gradient(to bottom, #020814, #05101f 40%, #0a0b20 100%);
+  color: var(--text-color);
+}
+
+/* Nebulosa oscura basada en colores reales de nebulosas espaciales */
+.app.dark .nebula-far {
+  /* Colores basados en la Nebulosa de Orión y Nebulosa del Águila */
+  background: 
+    radial-gradient(ellipse at 25% 25%, rgba(77, 5, 232, 0.1) 0%, transparent 70%),
+    radial-gradient(ellipse at 75% 60%, rgba(17, 23, 80, 0.15) 0%, transparent 70%),
+    radial-gradient(circle at 50% 50%, rgba(52, 27, 157, 0.05) 0%, transparent 100%);
+  animation: nebulaGlowDark 30s infinite alternate ease-in-out;
+}
+
+.app.dark .nebula-mid {
+  /* Colores basados en la Nebulosa del Velo y Nebulosa del Cangrejo */
+  background: 
+    radial-gradient(ellipse at 20% 40%, rgba(93, 13, 155, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse at 70% 30%, rgba(40, 10, 108, 0.1) 0%, transparent 65%);
+  animation: nebulaGlowDark 25s infinite alternate-reverse ease-in-out;
+}
+
+.app.dark .nebula-near {
+  /* Colores basados en polvo cósmico y gas interestelar */
+  background:
+    radial-gradient(circle at 40% 60%, rgba(83, 54, 196, 0.07) 0%, transparent 60%),
+    radial-gradient(circle at 65% 40%, rgba(38, 72, 156, 0.06) 0%, transparent 65%);
+  animation: nebulaGlowDark 20s infinite alternate ease-in-out;
+}
+
+/* Animación optimizada para nebulosas - modo oscuro */
+@keyframes nebulaGlowDark {
+  0% { 
+    opacity: var(--nebula-opacity-dark); 
+    transform: scale(1); 
+    filter: hue-rotate(0deg); 
+  }
+  50% { 
+    opacity: var(--nebula-opacity-dark); 
+    transform: scale(1.02); 
+    filter: hue-rotate(10deg); 
+  }
+  100% { 
+    opacity: var(--nebula-opacity-dark); 
+    transform: scale(1); 
+    filter: hue-rotate(-10deg); 
+  }
+}
+
+/* Estrella fugaz optimizada para modo dark */
+.app.dark > .shooting-star {
+  position: fixed;
+  top: -10%;
+  left: -10%;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 2px white, 0 0 20px 5px rgba(255, 255, 255, 0.3);
+  opacity: 0;
+  z-index: 10;
+  animation: shootingStar 12s 7s infinite ease-out;
+  will-change: transform, opacity;
+}
+
+@keyframes shootingStar {
+  0% { 
+    opacity: 0; 
+    transform: translate(0, 0) scale(0.5); 
+  }
+  0.5% { 
+    opacity: 1; 
+  }
+  2%, 100% { 
+    transform: translate(120vw, 80vh) scale(0.2); 
+    opacity: 0; 
+  }
+}
+
+/* ============================
+   Tema Claro - Cielo Realista
+============================ */
+.app.light {
+  --bg-color: var(--bg-color-light);
+  --text-color: var(--text-color-light);
+  --card-bg: var(--card-bg-light);
+  /* Degradado más suave y natural - inspirado en el cielo real */
+  background: linear-gradient(to bottom, #add8e6, #d4f1f9 60%, #e1eefb 100%);
+  color: var(--text-color);
+}
+
+/* Nubes en el modo claro - basadas en formaciones de nubes reales */
+.app.light .nebula-far {
+  background: 
+    radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, 0.75) 0%, transparent 80%),
+    radial-gradient(ellipse at 70% 60%, rgba(255, 255, 255, 0.7) 0%, transparent 80%);
+  animation: cloudMovement 60s infinite alternate ease-in-out;
+  opacity: var(--nebula-opacity-light);
+}
+
+.app.light .nebula-mid {
+  background: 
+    radial-gradient(ellipse at 20% 40%, rgba(255, 255, 255, 0.65) 0%, transparent 70%),
+    radial-gradient(ellipse at 80% 30%, rgba(255, 255, 255, 0.65) 0%, transparent 75%);
+  animation: cloudMovement 45s infinite alternate-reverse ease-in-out;
+}
+
+.app.light .nebula-near {
+  background:
+    radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.55) 0%, transparent 65%),
+    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.5) 0%, transparent 65%);
+  animation: cloudMovement 30s infinite alternate ease-in-out;
+}
+
+@keyframes cloudMovement {
+  0% { transform: translateX(-3%) scale(1); }
+  100% { transform: translateX(3%) scale(1.03); }
+}
+
+/* Sol para modo claro - realista y optimizado */
+.app.light > .sun {
+  position: fixed;
+  top: 12%;
+  right: 15%;
+  width: 70px;
+  height: 70px;
+  background-color: transparent;
+  border-radius: 50%;
+  z-index: 1;
+  overflow: hidden;
+  box-shadow: 0 0 60px 30px rgba(255, 255, 240, 0.7);
+  animation: sunPulse 10s infinite alternate ease-in-out;
+  will-change: box-shadow;
+}
+
+.app.light > .sun:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, 
+    rgba(255,255,245,1) 0%, 
+    rgba(255,248,220,1) 40%, 
+    rgba(255,236,173,1) 70%, 
+    rgba(255,215,128,0.7) 90%);
+  border-radius: 50%;
+}
+
+@keyframes sunPulse {
+  0% { 
+    box-shadow: 0 0 60px 25px rgba(255, 255, 240, 0.7),
+                0 0 100px 50px rgba(255, 250, 230, 0.3);
+  }
+  100% { 
+    box-shadow: 0 0 70px 30px rgba(255, 255, 240, 0.8),
+                0 0 120px 60px rgba(255, 250, 230, 0.4);
+  }
+}
+
+.app.light .star {
+  opacity: 0.4; /* Estrellas sutiles en modo claro */
+}
+
+/* ============================
+   Contenido principal y resto de estilos
+============================ */
+main {
+  flex: 1;
+  padding-top: 80px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* Transiciones de página optimizadas */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(20px);
+  will-change: opacity, transform;
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.page-transition-exit {
+  opacity: 1;
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
+  will-change: opacity;
+}
+
+/* Scrollbar para light mode */
+.app.light::-webkit-scrollbar {
+  width: 10px;
+}
+
+.app.light::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.app.light::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 5px;
+}
+
+.app.light::-webkit-scrollbar-thumb:hover {
+  background: #ccc;
+}
+
+/* Scrollbar para dark mode */
+.app.dark::-webkit-scrollbar {
+  width: 10px;
+}
+
+.app.dark::-webkit-scrollbar-track {
+  background: #1a1a2e;
+}
+
+.app.dark::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 5px;
+}
+
+.app.dark::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}
+
+/* Links styling */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--secondary-color);
+}
+
+/* Focus outline para accesibilidad */
+:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Helper classes */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Optimizaciones para dispositivos móviles */
+@media (max-width: 768px) {
+  /* Reducir complejidad visual para mejor rendimiento */
+  :root {
+    --star-density: 1000px; /* Menos densidad de estrellas */
+    --nebula-opacity-dark: 0.7;
+    --nebula-opacity-light: 0.6;
   }
   
-  .page-transition-exit {
-    opacity: 1;
+  main {
+    padding-top: 70px;
   }
   
-  .page-transition-exit-active {
-    opacity: 0;
-    transition: opacity 300ms;
+  .bright-star::before {
+    display: none; /* Eliminar efectos de destello en móviles */
   }
   
-  /* Improved scrollbar for light mode */
-  .app.light::-webkit-scrollbar {
-    width: 10px;
+  .app.light > .sun {
+    width: 50px;
+    height: 50px;
+    box-shadow: 0 0 40px 20px rgba(255, 255, 240, 0.6);
   }
   
-  .app.light::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
-  
-  .app.light::-webkit-scrollbar-thumb {
-    background: #ddd;
-    border-radius: 5px;
-  }
-  
-  .app.light::-webkit-scrollbar-thumb:hover {
-    background: #ccc;
-  }
-  
-  /* Improved scrollbar for dark mode */
-  .app.dark::-webkit-scrollbar {
-    width: 10px;
-  }
-  
-  .app.dark::-webkit-scrollbar-track {
-    background: #2a2a2a;
-  }
-  
-  .app.dark::-webkit-scrollbar-thumb {
-    background: #444;
-    border-radius: 5px;
-  }
-  
-  .app.dark::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
-  
-  /* Links default styling */
-  a {
-    color: var(--primary-color);
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  
-  a:hover {
-    color: var(--secondary-color);
-  }
-  
-  /* Focus outline for accessibility */
-  :focus {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
-  }
-  
-  /* Helper classes */
-  .container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    main {
-      padding-top: 70px;
+  @keyframes sunPulse {
+    0% { 
+      box-shadow: 0 0 40px 15px rgba(255, 255, 240, 0.6),
+                  0 0 70px 30px rgba(255, 250, 230, 0.2);
+    }
+    100% { 
+      box-shadow: 0 0 50px 20px rgba(255, 255, 240, 0.7),
+                  0 0 80px 40px rgba(255, 250, 230, 0.3);
     }
   }
   
-  @media (max-width: 480px) {
-    main {
-      padding-top: 60px;
+  /* Optimizar animaciones */
+  @keyframes nebulaGlowDark {
+    0%, 100% { 
+      opacity: var(--nebula-opacity-dark);
+      filter: hue-rotate(0deg);
+    }
+    50% { 
+      opacity: var(--nebula-opacity-dark);
+      filter: hue-rotate(5deg);
     }
   }
+  
+  @keyframes cloudMovement {
+    0%, 100% { transform: translateX(0); }
+  }
+  
+  @keyframes brightStar {
+    0%, 100% { 
+      transform: scale(1); 
+      box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.7);
+    }
+    50% { 
+      transform: scale(1.2); 
+      box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.8);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  main {
+    padding-top: 60px;
+  }
+  
+  /* Simplificar aún más para dispositivos pequeños */
+  :root {
+    --star-density: 1200px;
+  }
+  
+  .app.light > .sun {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* ===== GALAXIAS OPTIMIZADAS - VÍA LÁCTEA REALISTA ===== */
+/* Ocultamos la galaxia CSS anterior */
+.via-lactea, .via-lactea-disco, .via-lactea-polvo-externo, .via-lactea-brazos,
+.via-lactea-brazos-detalle, .via-lactea-extensiones, .via-lactea-brazos-curvos,
+.via-lactea-nucleo, .via-lactea-nucleo-halo, .estrellas-dispersas {
+  display: none;
+}
+
+/* SOLUCIÓN: Estilos para hacer visible la galaxia 3D correctamente centrada */
+.galaxy-canvas-container {
+  position: fixed;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  pointer-events: auto;
+  opacity: 1 !important;
+  transform: none;
+}
+
+/* Mejoramos el tamaño del canvas */
+.galaxy-canvas-container canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Eliminar la restricción de visibilidad solo en modo oscuro */
+.app.dark .galaxy-canvas-container {
+  opacity: 1;
+}
+
+/* También permitir visibilidad en modo claro */
+.app.light .galaxy-canvas-container {
+  opacity: 1;
+}
+
+/* Control responsivo para dispositivos móviles */
+@media (max-width: 768px) {
+  .galaxy-canvas-container {
+    height: 100vh;
+  }
+}

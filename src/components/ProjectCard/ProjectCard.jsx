@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiGithub, FiExternalLink, FiInfo } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import './ProjectCard.css';
 
 const ProjectCard = ({ id, title, description, technologies, darkMode, liveUrl, codeUrl, images }) => {
+  const { t } = useTranslation();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const handleNext = () => {
@@ -12,11 +14,14 @@ const ProjectCard = ({ id, title, description, technologies, darkMode, liveUrl, 
   };
 
   const hasImages = images && images.length > 0;
-
   images = images || [];
 
   const handlePrev = () => {
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  const openLightbox = (index) => {
+    // Functionality for opening lightbox can be implemented here
   };
 
   return (
@@ -33,7 +38,7 @@ const ProjectCard = ({ id, title, description, technologies, darkMode, liveUrl, 
             <img
               key={index}
               src={img}
-              alt={`screenshot ${index + 1}`}
+              alt={t('projectCard.screenshot', { number: index + 1 })}
               className={`carousel-image ${index === currentImageIndex ? 'active' : ''}`}
               initial={{ opacity: 0 }}
               animate={{ 
@@ -48,10 +53,14 @@ const ProjectCard = ({ id, title, description, technologies, darkMode, liveUrl, 
 
         <div className="carousel-controls">
           <button onClick={handlePrev} className="nav-button prev">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+              <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/>
+            </svg>
           </button>
           <button onClick={handleNext} className="nav-button next">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+              <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/>
+            </svg>
           </button>
         </div>
 
@@ -72,7 +81,7 @@ const ProjectCard = ({ id, title, description, technologies, darkMode, liveUrl, 
                 href={codeUrl} 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                aria-label="View code"
+                aria-label={t('projectCard.viewCode', 'View code')}
                 whileHover={{ scale: 1.1 }}
               >
                 <FiGithub className="link-icon" />
@@ -83,7 +92,7 @@ const ProjectCard = ({ id, title, description, technologies, darkMode, liveUrl, 
                 href={liveUrl} 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                aria-label="Live demo"
+                aria-label={t('projectCard.liveDemo', 'Live demo')}
                 whileHover={{ scale: 1.1 }}
               >
                 <FiExternalLink className="link-icon" />
@@ -93,7 +102,7 @@ const ProjectCard = ({ id, title, description, technologies, darkMode, liveUrl, 
               whileHover={{ scale: 1.1 }}
               className="project-details-link"
             >
-              <Link to={`/proyectos/${id}`} aria-label="Ver detalles del proyecto">
+              <Link to={`/proyectos/${id}`} aria-label={t('projectCard.viewDetails', 'View project details')}>
                 <FiInfo className="link-icon" />
               </Link>
             </motion.div>
@@ -102,7 +111,7 @@ const ProjectCard = ({ id, title, description, technologies, darkMode, liveUrl, 
       </div>
 
       <div className="card-content">
-        <h3 className="card-title">{title}</h3>
+        <h3 className="card-title">{t(title)}</h3>
         
         <div className="technologies-grid">
           {technologies?.map((tech, index) => (
@@ -116,7 +125,7 @@ const ProjectCard = ({ id, title, description, technologies, darkMode, liveUrl, 
           ))}
         </div>
 
-        <p className="card-description">{description}</p>
+        <p className="card-description">{t(description)}</p>
         
         <motion.div 
           className="view-details-button"
@@ -124,7 +133,7 @@ const ProjectCard = ({ id, title, description, technologies, darkMode, liveUrl, 
           whileTap={{ scale: 0.97 }}
         >
           <Link to={`/proyectos/${id}`} className="details-link">
-            Ver detalles
+            {t('projectCard.details', 'Ver detalles')}
           </Link>
         </motion.div>
       </div>

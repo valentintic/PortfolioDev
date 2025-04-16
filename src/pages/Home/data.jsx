@@ -5,12 +5,13 @@ import Historial from '../../assets/NutriSmart/Historial.jpg';
 import InformacionUsuario from '../../assets/NutriSmart/InformacionUsuario.jpg';
 import Perfil from '../../assets/NutriSmart/Perfil.jpg';
 import EscanerQR from '../../assets/NutriSmart/EscanerQR.jpg';
+
 export const skillsData = {
   frontend: [
     { 
       id: 1,
-      title: 'NutriSmart Diet Planner', 
-      description: 'Aplicación para la planificación automática de dietas personalizadas basadas en la actividad física del usuario, con integración de la API de Google Fit y sistema de autenticación OAuth 2.0. Con seguimiento de los datos de consumo y actividad física, mejora el adherencia al diet y reduce el tiempo de cálculo manual de los planos de dieta.',
+      title: 'projects.nutrismart.title',
+      description: 'projects.nutrismart.description',
       images: [
         IndexNutriSmart,
         AlimentosNutriSmart,
@@ -24,23 +25,18 @@ export const skillsData = {
       year: 2023,
       repository: 'https://github.com/valentintic/DietasAutomaticas',
       demo: 'https://github.com/valentintic/DietasAutomaticas',
-      role: 'Full Stack Developer',
+      role: 'Desarrollador Full Stack',
       features: [
-        'Dietas Personalizadas de forma Automática',
-        'Integración con la API de Google Fit',
-        'OAuth 2.0 para autenticación segura',
-        'Metricas de actividad física en tiempo real',
-        'Ajustes automáticos de los datos segun los avances del usuario',
-        'Interfaz moderna y responsiva',
-        'Sincronización entre dispositivos'
+        'projects.nutrismart.features.item1',
+        'projects.nutrismart.features.item2',
+        'projects.nutrismart.features.item3',
+        'projects.nutrismart.features.item4',
+        'projects.nutrismart.features.item5',
+        'projects.nutrismart.features.item6',
+        'projects.nutrismart.features.item7'
       ],
-      challenges: 'Integrating real-time physical activity data with personalized nutritional recommendations',
-      performance: {
-        dietAdherence: 'Aumento de la adherencia al plan de dieta en un 30%',
-        calculationTime: 'Reducción del tiempo de cálculo de los planos de dieta en un 70%'
-      }
+      challenges: 'projects.nutrismart.challenges'
     },
-    
   ],
   backend: [
     {
