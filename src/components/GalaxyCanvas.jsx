@@ -9,7 +9,7 @@ function CameraController() {
   
   useEffect(() => {
     // Posicionar la cámara para una vista frontal centrada
-    camera.position.set(0, 0, 15); // Ajustar la posición de la cámara
+    camera.position.set(0, 2, 9); // Ajustar la posición de la cámara
     // Mirar al centro exacto
     camera.lookAt(0, 0, 0);
   }, [camera]);
@@ -22,9 +22,9 @@ export default function GalaxyCanvas() {
     <div className="galaxy-canvas-container">
       <Canvas 
         camera={{ 
-          position: [0, 0, 15],
-          fov: 40,
-          near: 0.1,
+          position: [0, 0, 50],
+          fov: 25,
+          near: 0.2,
           far: 1000
         }}
         gl={{ antialias: true, alpha: true }}
@@ -52,7 +52,7 @@ export default function GalaxyCanvas() {
           <GalaxyModel 
             path="/Models/need_some_space.glb" 
             scale={4}
-            position={[0, 0, 0]} // Ubicar el modelo en el centro exacto
+            position={[0, -8, 0]} // Ubicar el modelo en el centro exacto
             rotation={[0, 0, 0]}
           />
           

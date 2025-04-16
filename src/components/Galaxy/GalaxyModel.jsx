@@ -4,8 +4,8 @@ import { useGLTF } from '@react-three/drei';   // useGLTF sí viene de drei
 
 export default function GalaxyModel({ 
   path = '/Models/need_some_space.glb', 
-  scale = 4, 
-  position = [0, -10, 0], // CAMBIO: Bajamos la posición 3 unidades
+  scale = 2, 
+  position = [0, 0, 0], // CAMBIO: Bajamos la posición 3 unidades
   rotation = [0, 0, 0]
 }) {
   const modelRef = useRef();
@@ -17,7 +17,7 @@ export default function GalaxyModel({
   useFrame((state, delta) => {
     if (modelRef.current) {
       // Rotación más lenta y natural
-      modelRef.current.rotation.y += delta * 0.08;
+      modelRef.current.rotation.y += delta * 0.01;
     }
   });
   
