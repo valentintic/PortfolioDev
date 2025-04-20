@@ -39,6 +39,21 @@
   --star-formation-pink: rgba(255, 150, 180, 0.4);
   --star-formation-blue: rgba(140, 180, 255, 0.35);
   --dust-lane: rgba(70, 50, 80, 0.2);
+
+  /* Variables para colores con formato RGB para usar con rgba() */
+  --bg-color-rgb: 3, 6, 19;
+  --primary-rgb: 255, 107, 107;
+  --secondary-rgb: 240, 101, 149;
+  
+  /* Sombras coherentes */
+  --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.1), 0 0 10px rgba(var(--primary-rgb), 0.1);
+  --shadow-md: 0 10px 20px rgba(0, 0, 0, 0.15), 0 0 15px rgba(var(--primary-rgb), 0.15);
+  --shadow-lg: 0 15px 30px rgba(0, 0, 0, 0.2), 0 0 20px rgba(var(--primary-rgb), 0.2);
+  
+  /* Bordes y efectos de cristal */
+  --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+  --glass-bg-dark: rgba(15, 20, 35, 0.3);
+  --glass-bg-light: rgba(255, 255, 255, 0.2);
 }
 
 * {
@@ -374,6 +389,10 @@ body {
   /* Degradado más suave y natural - inspirado en el cielo real */
   background: linear-gradient(to bottom, #add8e6, #d4f1f9 60%, #e1eefb 100%);
   color: var(--text-color);
+}
+
+.light {
+  --bg-color-rgb: 225, 238, 251;
 }
 
 /* Nubes en el modo claro - basadas en formaciones de nubes reales */

@@ -1,0 +1,120 @@
+.galaxy-canvas-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  /* Overlay para añadir efectos de color */
+  .galaxy-canvas-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+      circle at center,
+      rgba(255, 236, 170, 0.1) 0%,
+      rgba(116, 149, 255, 0.08) 40%,
+      rgba(43, 57, 144, 0.05) 60%,
+      rgba(0, 0, 0, 0) 80%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  /* Efecto de polvo cósmico */
+  .cosmic-dust {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/textures/dust_noise.png');
+    background-size: cover;
+    opacity: 0.18;
+    mix-blend-mode: screen;
+    filter: brightness(1.3) contrast(1.2);
+    pointer-events: none;
+    z-index: 2;
+    animation: dustDrift 120s infinite linear;
+  }
+  
+  @keyframes dustDrift {
+    0% {
+      background-position: 0% 0%;
+    }
+    100% {
+      background-position: 100% 100%;
+    }
+  }
+  
+  /* Brillo del núcleo galáctico */
+  .galaxy-core-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 45vh;
+    height: 45vh;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(
+      circle at center,
+      rgba(255, 231, 149, 0.3) 0%,
+      rgba(255, 213, 96, 0.2) 30%,
+      rgba(255, 166, 43, 0.08) 60%,
+      rgba(0, 0, 0, 0) 80%
+    );
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(25px);
+    border-radius: 50%;
+  }
+  
+  /* Animación de brillo mejorada para más naturalidad */
+  @keyframes coreGlow {
+    0% {
+      opacity: 0.65;
+      filter: blur(20px);
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      opacity: 0.85;
+      filter: blur(25px);
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+    100% {
+      opacity: 0.65;
+      filter: blur(20px);
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+  
+  .galaxy-core-glow {
+    animation: coreGlow 8s infinite ease-in-out;
+  }
+  
+  /* Añadir efecto de estrellas brillantes superpuestas */
+  .galaxy-stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/textures/stars.png'); /* Si tienes una textura de estrellas */
+    background-size: cover;
+    opacity: 0.4;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    z-index: 3;
+    animation: twinkle 10s infinite linear;
+  }
+  
+  @keyframes twinkle {
+    0%, 100% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }

@@ -127,15 +127,22 @@ const ProjectCard = ({ id, title, description, technologies, darkMode, liveUrl, 
 
         <p className="card-description">{t(description)}</p>
         
-        <motion.div 
-          className="view-details-button"
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.97 }}
-        >
-          <Link to={`/proyectos/${id}`} className="details-link">
-            {t('projectCard.details', 'Ver detalles')}
-          </Link>
-        </motion.div>
+        {/* Botón de detalles mejorado */}
+        <div className="details-link-wrapper">
+          <motion.div 
+            className="view-details-button"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            <Link 
+              to={`/proyectos/${id}`} 
+              className={`details-link ${darkMode ? 'dark' : 'light'}`}
+              aria-label={t('projectCard.viewDetails', 'Ver detalles del proyecto')}
+            >
+              {t('projectCard.details', 'Ver detalles')}
+            </Link>
+          </motion.div>
+        </div>
       </div>
     </motion.div>
   );
