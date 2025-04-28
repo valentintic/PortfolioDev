@@ -1,4 +1,5 @@
 :root {
+
   /* Colores para modo claro */
   --bg-color-light: #e1eefb;
   --text-color-light: #333;
@@ -571,6 +572,8 @@ a:hover {
     --star-density: 1000px; /* Menos densidad de estrellas */
     --nebula-opacity-dark: 0.7;
     --nebula-opacity-light: 0.6;
+    --section-padding: 2.5rem 1.25rem;
+    --title-font-size: 1.75rem;
   }
   
   main {
@@ -624,6 +627,63 @@ a:hover {
       box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.8);
     }
   }
+
+  h1 {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+  }
+  
+  .section-title {
+    margin-bottom: 2rem;
+  }
+  
+  /* Mejorar espaciado para secciones en móvil */
+  section {
+    padding: var(--section-padding);
+    margin-bottom: 2rem;
+  }
+  
+  /* Aumentar tamaño de toque para elementos interactivos */
+  button, 
+  .nav-button, 
+  .lightbox-nav, 
+  .social-link, 
+  .contact-link {
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Optimizaciones de rendimiento para móvil */
+  .profile-background-shape::before,
+  .gravitational-rays {
+    animation-duration: 30s; /* Más lento para ahorrar batería */
+  }
+  
+  /* Simplificar efectos de fondo */
+  .star-field {
+    opacity: 0.6;
+  }
+  
+  /* Ajustar transiciones para que sean más ligeras */
+  .project-card,
+  .expertise-card,
+  .tech-item {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Simplificar brillos */
+  .title-with-glow::before,
+  .section-title::before {
+    filter: blur(15px);
+    opacity: 0.5;
+  }
 }
 
 @media (max-width: 480px) {
@@ -634,11 +694,21 @@ a:hover {
   /* Simplificar aún más para dispositivos pequeños */
   :root {
     --star-density: 1200px;
+    --section-padding: 2rem 1rem;
+    --title-font-size: 1.5rem;
   }
   
   .app.light > .sun {
     width: 40px;
     height: 40px;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
   }
 }
 

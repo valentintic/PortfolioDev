@@ -719,8 +719,12 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div className="profile-image-container">
-              <div className="profile-image-placeholder"></div>
               <div className="profile-background-shape"></div>
+              <div className="profile-background-accent"></div>
+              <div className="profile-glow"></div>
+              <div className="profile-image-placeholder">
+                <div className="profile-image-inner"></div>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -753,33 +757,14 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
             transition={{ duration: 0.4 }}
           >
             <p className="about-intro">
-              Desarrollador Full Stack especializado en arquitecturas cloud-native con medio año de experiencia construyendo soluciones escalables.
-            </p>
-            <p className="about-details">
-              Especializado en crear aplicaciones web de alto rendimiento con arquitecturas escalables y modernas. Combino tecnologías frontend y backend con infraestructura cloud y microservicios para desarrollar soluciones robustas y eficientes. Mi enfoque se centra en la calidad del código, la arquitectura de software y la optimización del rendimiento.
-              
-              <br /><br />
-              <strong>💡 Áreas de especialización:</strong>
-              <ul>
-                <li><strong>💻 Desarrollo Full Stack</strong> — React.js, Vue.js, ASP.NET Core, Spring Boot</li>
-                <li><strong>☁️ Cloud & DevOps</strong> — AWS, Azure, Kubernetes</li>
-                <li><strong>⚙️ Optimización</strong> — Patrones de diseño, Arquitectura escalable</li>
-              </ul>
-              
-              <strong>🌱 En constante aprendizaje:</strong>
-              <ul>
-                <li>Kubernetes & Microservicios — Arquitecturas distribuidas para sistemas escalables</li>
-                <li>Machine Learning aplicado — Integración de IA en aplicaciones web</li>
-                <li>Desarrollo seguro — Implementación de mejores prácticas de ciberseguridad</li>
-              </ul>
-              
-              <strong>👯 Interesado en colaborar en:</strong>
-              <ul>
-                <li>🚀 Proyectos open source con impacto real</li>
-                <li>📡 Soluciones que integren cloud, IA y desarrollo web</li>
-                <li>🏆 Retos técnicos de escalabilidad y optimización</li>
-              </ul>
-            </p>
+            Como Desarrollador Full Stack especializado en tecnologías modernas, me apasiona crear soluciones digitales que impacten positivamente en la vida de las personas. Permíteme compartir un poco más sobre mi trayectoria y pasiones.
+            <br /><br />
+          </p>
+          <p className="about-details">
+            Mi enfoque profesional combina el desarrollo Full Stack con soluciones cloud, siempre buscando la innovación y la eficiencia en cada proyecto. Más allá del código, soy un entusiasta de la astronomía y la ciencia ficción, lo que alimenta mi curiosidad y mi deseo constante de aprendizaje.
+            <br /><br />
+            Mi otra gran pasión es el fitness y la salud. Tras trabajar durante un año en el sector y mantener una rutina de entrenamiento desde los 16 años, he desarrollado proyectos orientados a facilitar el acceso al mundo del fitness. Mi objetivo es crear herramientas digitales que eliminen barreras y hagan más accesible un estilo de vida saludable para todos.
+          </p>
           </motion.div>
           
           <motion.div 
@@ -957,7 +942,15 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
         </div>
         
         <motion.div 
-          className="projects-grid"
+          className={`projects-grid ${
+            skillsData[selectedCategory].length === 1 
+              ? 'single-card' 
+              : skillsData[selectedCategory].length === 2 
+                ? 'two-cards' 
+                : skillsData[selectedCategory].length === 3 
+                  ? 'three-cards' 
+                  : 'multi-cards'
+          }`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}

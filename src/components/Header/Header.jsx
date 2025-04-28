@@ -1,9 +1,12 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FiSun, FiMoon } from 'react-icons/fi';
+import { FiSun, FiMoon, FiDownload } from 'react-icons/fi';
 import { useTranslation } from 'react-i18next';
 import './Header.css';
 import { useState, useEffect } from 'react';
+// Importamos los CV
+import cvES from '../../assets/ValentínPreuteseiCV.pdf';
+import cvEN from '../../assets/ValentinPreuteseiCVEnglish.pdf';
 
 // Header.jsx
 const Header = ({ darkMode, setDarkMode }) => {
@@ -15,6 +18,11 @@ const Header = ({ darkMode, setDarkMode }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const isHomePage = location.pathname === '/';
+
+  // Determinar qué CV mostrar según el idioma
+  const getCurrentCV = () => {
+    return i18n.language === 'es' ? cvES : cvEN;
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -110,6 +118,16 @@ const Header = ({ darkMode, setDarkMode }) => {
 
       {/* Controles */}
       <div className="controls">
+        {/* Botón de descarga CV */}
+        <a 
+          href={getCurrentCV()} 
+          download={i18n.language === 'es' ? "CV_Valentin_Preutesei_ES.pdf" : "CV_Valentin_Preutesei_EN.pdf"}
+          className="cv-download-btn"
+        >
+          <FiDownload className="download-icon" />
+          <span className="download-text">{t('CV')}</span>
+        </a>
+
         <div className="language-selector">
           <button
             onClick={() => handleLanguageChange('es')}
@@ -160,6 +178,15 @@ const Header = ({ darkMode, setDarkMode }) => {
             {link.name}
           </a>
         ))}
+        
+        {/* Botón de descarga CV en menú móvil */}
+        <a 
+          href={getCurrentCV()} 
+          download={i18n.language === 'es' ? "CV_Valentin_Preutesei_ES.pdf" : "CV_Valentin_Preutesei_EN.pdf"}
+          className="mobile-cv-download"
+        >
+          <FiDownload className="download-icon" /> {t('Descargar CV')}
+        </a>
       </div>
     </motion.header>
   );

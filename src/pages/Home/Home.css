@@ -219,29 +219,51 @@
 
 .profile-image-container {
   position: relative;
-  width: 340px;
-  height: 340px;
+  width: 350px;
+  height: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 20px auto;
+  z-index: 5;
 }
 
 .profile-image-placeholder {
-  width: 280px;
-  height: 280px;
-  border-radius: 38% 62% 52% 48% / 44% 46% 54% 56%;
+  width: 300px;
+  height: 360px;
+  position: relative;
+  z-index: 3;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  overflow: hidden;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  background-color: rgba(30, 30, 30, 0.2);
+  box-shadow: 
+    0 20px 45px rgba(0, 0, 0, 0.15),
+    0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.profile-image-placeholder:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 
+    0 25px 35px rgba(0, 0, 0, 0.25),
+    0 0 30px rgba(var(--primary-rgb), 0.2);
+}
+
+.profile-image-inner {
+  position: absolute;
+  inset: 5px;
+  border-radius: 15px;
+  overflow: hidden;
   background-image: url("../../assets/WhatsApp Image 2025-02-03 at 20.23.21.jpeg");
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.25), 
-              0 8px 15px rgba(0, 0, 0, 0.15);
-  position: relative;
-  z-index: 3;
-  transition: all 0.6s cubic-bezier(0.2, 0.85, 0.4, 1.275);
-  border: 4px solid rgba(255, 255, 255, 0.85);
-  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.profile-image-placeholder:hover .profile-image-inner {
+  transform: scale(1.03);
+  filter: brightness(1.05) contrast(1.05);
 }
 
 .profile-image-placeholder::after {
@@ -252,115 +274,202 @@
   width: 100%;
   height: 100%;
   background: linear-gradient(
-    135deg, 
-    rgba(255, 255, 255, 0.1) 0%, 
-    rgba(255, 255, 255, 0) 60%
+    to bottom right,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(0, 0, 0, 0.2) 100%
   );
   z-index: 2;
+  border-radius: 20px;
 }
 
-.profile-image-placeholder:hover {
-  transform: scale(1.07) translateY(-12px) rotate(2deg);
-  border-radius: 45% 55% 52% 48% / 48% 42% 58% 52%;
-  box-shadow: 0 28px 45px rgba(0, 0, 0, 0.2),
-              0 10px 20px rgba(0, 0, 0, 0.15),
-              0 0 25px rgba(var(--primary-rgb), 0.25);
-  border-color: rgba(255, 255, 255, 0.9);
+.light .profile-image-placeholder {
+  background-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.12),
+    0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
+.light .profile-image-placeholder:hover {
+  box-shadow: 
+    0 25px 35px rgba(0, 0, 0, 0.15),
+    0 0 30px rgba(var(--primary-rgb), 0.15);
+}
+
+/* Mejoras al fondo de la imagen */
 .profile-background-shape {
   position: absolute;
   width: 320px;
   height: 320px;
-  top: -15px;
-  left: -15px;
-  border-radius: 42% 58% 48% 52% / 42% 58% 42% 58%;
+  top: -10px;
+  left: -10px;
   background: linear-gradient(
-    135deg, 
-    var(--primary-color) 0%, 
-    var(--secondary-color) 50%, 
-    var(--primary-color) 100%
+    135deg,
+    rgba(var(--primary-rgb), 0.2) 0%,
+    rgba(var(--secondary-rgb), 0.2) 100%
   );
-  opacity: 0.65;
+  opacity: 0.5;
   z-index: 1;
-  filter: blur(28px);
-  animation: dynamicFloat 15s ease-in-out infinite alternate;
+  filter: blur(20px);
+  transition: all 0.5s ease;
+  border-radius: 30px;
+}
+
+/* Segundo elemento decorativo en el fondo */
+.profile-background-accent {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  bottom: 10px;
+  right: 10px;
+  border-radius: 24px;
+  background: rgba(var(--primary-rgb), 0.15);
+  opacity: 0.2;
+  z-index: 0;
+  filter: blur(15px);
+  transform: rotate(15deg);
+  animation: floatAnimation 8s ease-in-out infinite alternate;
+}
+
+@keyframes floatAnimation {
+  0% {
+    transform: rotate(15deg) translateY(0);
+  }
+  50% {
+    transform: rotate(20deg) translateY(-10px);
+  }
+  100% {
+    transform: rotate(15deg) translateY(0);
+  }
 }
 
 .profile-glow {
   position: absolute;
   width: 300px;
   height: 300px;
-  border-radius: 50%;
   background: radial-gradient(
-    circle,
-    rgba(var(--primary-rgb), 0.3) 0%,
-    rgba(var(--primary-rgb), 0.1) 35%,
-    rgba(var(--primary-rgb), 0) 70%
+    circle at 50% 50%,
+    rgba(var(--primary-rgb), 0.15) 0%,
+    rgba(var(--secondary-rgb), 0.1) 50%,
+    transparent 70%
   );
-  z-index: 2;
-  filter: blur(15px);
-  opacity: 0.8;
-  animation: pulse 8s infinite alternate;
+  z-index: 0;
+  filter: blur(25px);
+  opacity: 0.5;
+  transform-origin: center;
 }
 
-@keyframes dynamicFloat {
-  0% {
-    transform: translateY(0) rotate(0deg) scale(1);
-    border-radius: 42% 58% 48% 52% / 42% 58% 42% 58%;
-  }
-  20% {
-    transform: translateY(-18px) rotate(-5deg) scale(1.06);
-    border-radius: 52% 48% 58% 42% / 38% 62% 38% 62%;
-  }
-  40% {
-    transform: translateY(12px) rotate(8deg) scale(0.96);
-    border-radius: 38% 62% 42% 58% / 56% 44% 56% 44%;
-  }
-  60% {
-    transform: translateY(-10px) rotate(-3deg) scale(1.03);
-    border-radius: 48% 52% 38% 62% / 62% 38% 62% 38%;
-  }
-  80% {
-    transform: translateY(5px) rotate(6deg) scale(0.98);
-    border-radius: 54% 46% 52% 48% / 46% 54% 46% 54%;
-  }
-  100% {
-    transform: translateY(0) rotate(0deg) scale(1);
-    border-radius: 42% 58% 48% 52% / 42% 58% 42% 58%;
-  }
-}
-
-@keyframes pulse {
-  0% {
-    opacity: 0.5;
-    transform: scale(0.95);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.05);
-  }
-  100% {
-    opacity: 0.5;
-    transform: scale(0.95);
-  }
-}
-
-
-
-.scroll-indicator {
+/* Simplificación de partículas */
+.profile-particles {
   position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1.5rem;
-  color: var(--text-secondary);
-  cursor: pointer;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  opacity: 0.6;
 }
 
-.scroll-indicator a {
-  color: inherit;
-  text-decoration: none;
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(var(--primary-rgb), 0.7);
+  box-shadow: 0 0 8px rgba(var(--primary-rgb), 0.4);
+  filter: blur(1px);
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.profile-image-placeholder:hover .particle {
+  opacity: 0.7;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .profile-image-container {
+    width: 280px;
+    height: 280px;
+  }
+  
+  .profile-image-placeholder {
+    width: 240px;
+    height: 240px;
+  }
+  
+  .profile-background-shape {
+    width: 260px;
+    height: 260px;
+  }
+  
+  .profile-background-accent {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .profile-glow {
+    width: 260px;
+    height: 260px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-image-container {
+    width: 240px;
+    height: 240px;
+  }
+  
+  .profile-image-placeholder {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .profile-background-shape {
+    width: 220px;
+    height: 220px;
+  }
+  
+  .profile-background-accent {
+    width: 100px;
+    height: 100px;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-image-container {
+    width: 240px;
+    height: 240px;
+  }
+  
+  .profile-image-placeholder {
+    width: 200px;
+    height: 200px;
+    border-radius: 12px;
+  }
+  
+  .profile-image-placeholder::before {
+    border-radius: 11px;
+  }
+  
+  .profile-background-shape,
+  .profile-glow {
+    width: 220px;
+    height: 220px;
+    filter: blur(15px);
+  }
+}
+
+/* Ajustes responsive para la imagen */
+@media (max-width: 480px) {
+  .profile-image-placeholder::before {
+    border-radius: 14px;
+  }
+  
+  .profile-image-inner {
+    inset: 4px;
+    border-radius: 10px;
+  }
+  
+  .profile-image-placeholder:hover {
+    transform: translateY(-5px) scale(1.01); /* Menos movimiento en móvil */
+  }
 }
 
 /* About Section */
@@ -952,6 +1061,7 @@
   
   .projects-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 
   .profile-image-container {
@@ -960,14 +1070,16 @@
   }
   
   .profile-image-placeholder {
-    width: 220px;
-    height: 220px;
+    width: 240px;
+    height: 240px;
+    border-radius: 14px;
   }
   
   .profile-background-shape,
   .profile-glow {
     width: 260px;
     height: 260px;
+    border-radius: 16px;
   }
 }
 
@@ -1505,7 +1617,10 @@
   color: var(--text-primary);
   border: 1px solid rgba(255, 255, 255, 0.1);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+              background 0.3s ease, 
+              color 0.3s ease,
+              background-color 0.3s ease;
   font-weight: 500;
   min-width: 150px;
   justify-content: center;
@@ -1527,14 +1642,28 @@
 }
 
 .category-tab.active {
-  color: #ffffff;
+  color: #ffffff !important;
   box-shadow: 0 6px 20px rgba(var(--primary-rgb), 0.25);
   border: 1px solid rgba(var(--primary-rgb), 0.3);
   transform: translateY(-3px);
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
 }
 
 .category-tab.active::before {
   opacity: 1;
+}
+
+.dark .category-tab.active {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: #ffffff !important;
+  border-color: rgba(var(--primary-rgb), 0.3);
+}
+
+.dark .category-tab.active .category-icon,
+.dark .category-tab.active .category-label {
+  color: #ffffff;
 }
 
 .category-tab:hover:not(.active) {
@@ -1901,34 +2030,302 @@
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative; /* Importante para el posicionamiento de elementos internos */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mejoras para el contenido de las tarjetas de proyectos */
+.project-content {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-title {
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+  color: var(--text-primary);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 3.6rem; /* 2 líneas aproximadamente */
+}
+
+.project-description {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.2rem;
+  line-height: 1.6;
+  flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Mejoras para los iconos de proyectos */
+.project-icon {
+  font-size: 1.2rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  color: var(--primary-color);
+}
+
+/* Estilos para las tecnologías utilizadas en proyectos */
+.project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.project-tech-tag {
+  background-color: rgba(var(--primary-rgb), 0.1);
+  color: var(--primary-color);
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Mejora para los links de proyectos */
+.project-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.2rem;
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  background-color: rgba(var(--primary-rgb), 0.1);
+  color: var(--primary-color);
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-link:hover {
+  background-color: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.project-link-icon {
+  margin-right: 0.4rem;
+  font-size: 1rem;
+}
+
+/* Mejoras para la imagen del proyecto */
+.project-image-container {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.project-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-image {
+  transform: scale(1.05);
+}
+
+/* Estilo para el modo claro */
+.light .project-card {
+  background-color: white;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+.light .project-tech-tag {
+  background-color: rgba(var(--primary-rgb), 0.08);
+}
+
+.light .project-link {
+  background-color: rgba(var(--primary-rgb), 0.08);
+}
+
+.light .project-description {
+  color: #555;
+}
+
+/* Responsive para tarjetas de proyectos */
+@media (max-width: 768px) {
+  .project-title {
+    font-size: 1.2rem;
+    -webkit-line-clamp: 1;
+    max-height: 1.8rem;
+  }
+  
+  .project-description {
+    -webkit-line-clamp: 2;
+    font-size: 0.9rem;
+  }
+  
+  .project-image-container {
+    height: 180px;
+  }
+  
+  .project-content {
+    padding: 1.2rem;
+  }
+  
+  .project-tech {
+    gap: 0.3rem;
+  }
+  
+  .project-tech-tag {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  .project-links {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-image-container {
+    height: 160px;
+  }
+  
+  .project-tech {
+    margin-top: 0.8rem;
+  }
+  
+  .project-links {
+    gap: 0.5rem;
+  }
+  
+  .project-link {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+    flex: 1;
+  }
+}
+
+/* Mejoras para la visualización de los proyectos */
+.projects-section {
+  padding: 6rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Grid mejorada con diseño adaptativo */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+  width: 100%;
+  position: relative;
+}
+
+/* Diseño especial para una sola tarjeta */
+.projects-grid:only-child {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Caso específico cuando hay exactamente una tarjeta */
+.projects-grid.single-card {
+  display: block;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.projects-grid.single-card .project-card {
+  height: auto;
+  margin-bottom: 0;
+}
+
+/* Mejoras para las tarjetas de proyectos */
+.project-card {
+  background-color: rgba(var(--bg-color-rgb), 0.3);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
 .project-card:hover {
   transform: translateY(-10px);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), 
               0 0 25px rgba(var(--primary-rgb), 0.2);
+  z-index: 1;
 }
 
-/* Bordes brillantes en tarjetas al hacer hover */
-.project-card::after, 
-.expertise-card::after, 
-.experience-item::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(130deg, var(--primary-color), transparent, var(--secondary-color));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.4s ease;
+/* Diseño especial para dos tarjetas */
+@media (min-width: 769px) {
+  .projects-grid.two-cards {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Diseño especial para tres tarjetas */
+  .projects-grid.three-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  /* Diseño más amplio para 4+ tarjetas */
+  .projects-grid.multi-cards {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
 }
 
-.project-card:hover::after, 
-.expertise-card:hover::after, 
-.experience-item:hover::after {
-  opacity: 1;
+/* Diseño móvil para tarjetas */
+@media (max-width: 768px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .project-card {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Estilos para modo claro */
+.light .project-card {
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.light .project-card:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1),
+              0 0 20px rgba(var(--primary-rgb), 0.15);
 }
 

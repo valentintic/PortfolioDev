@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
-import { Stars, OrbitControls, Environment } from '@react-three/drei';
+import { Stars, OrbitControls } from '@react-three/drei';
 import GalaxyModel from './Galaxy/GalaxyModel';
 
 // Componente para centrar la cámara correctamente
@@ -36,6 +36,8 @@ export default function GalaxyCanvas() {
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 5, 5]} intensity={0.7} />
         <directionalLight position={[-5, -2, -5]} intensity={0.3} color="#5590ff" />
+        <directionalLight position={[0, -5, -2]} intensity={0.2} color="#ffe0a0" />
+        <hemisphereLight color="#4488ff" groundColor="#101020" intensity={0.3} />
         
         <Suspense fallback={
           <mesh>
@@ -55,8 +57,6 @@ export default function GalaxyCanvas() {
             position={[0, -8, 0]} // Ubicar el modelo en el centro exacto
             rotation={[0, 0, 0]}
           />
-          
-          <Environment preset="night" />
         </Suspense>
         
         {/* Campo de estrellas más sutil para no distraer del modelo */}

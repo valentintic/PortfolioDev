@@ -1,19 +1,42 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 import './Galaxy.css';
 
+// Definir rutas de recursos de manera más flexible
+const getResourcePath = (path) => {
+  // Obtener la URL base actual
+  const baseUrl = window.location.origin;
+  // Si ya es una URL completa, devolverla como está
+  if (path.startsWith('http')) return path;
+  // Si es una ruta absoluta, asegurarse de que comience con /
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  // Combinar con la URL base
+  return `${baseUrl}${normalizedPath}`;
+};
+
 export default function GalaxyModel({ 
-  path = '/Models/need_some_space.glb', 
+  path = 'Models/need_some_space.glb', // Eliminado / al principio
   scale = 2, 
   position = [0, 0, 0],
   rotation = [0, 0, 0]
 }) {
   const modelRef = useRef();
+  const [modelLoaded, setModelLoaded] = useState(false);
+  const [loadError, setLoadError] = useState(null);
   
-  // Cargar el modelo GLB
-  const { scene } = useGLTF(path);
+  // Cargar el modelo GLB con manejo de errores
+  const { scene, errors } = useGLTF(getResourcePath(path), true, 
+    (error) => {
+      console.error('Error cargando el modelo:', error);
+      setLoadError(error);
+    },
+    () => {
+      console.log('Modelo cargado correctamente');
+      setModelLoaded(true);
+    }
+  );
   
   // Actualización en el useEffect para mejorar los colores galácticos
   useEffect(() => {
@@ -50,10 +73,11 @@ export default function GalaxyModel({
             // Añadir puntos rojizos para regiones de formación estelar
             const textureLoader = new THREE.TextureLoader();
             try {
-              galaxyMaterial.map = textureLoader.load('/textures/galaxy_variation.jpg');
+              // Usar la función de ruta relativa para cargar la textura
+              galaxyMaterial.map = textureLoader.load(getResourcePath('textures/galaxy_variation.jpg'));
               galaxyMaterial.map.wrapS = galaxyMaterial.map.wrapT = THREE.RepeatWrapping;
             } catch (error) {
-              console.log("Textura no encontrada, usando color plano");
+              console.log("Textura no encontrada, usando color plano:", error);
             }
 
             // Variación de color según posición
@@ -93,6 +117,16 @@ export default function GalaxyModel({
       modelRef.current.rotation.y += delta * 0.002;
     }
   });
+
+  // Mostrar errores en la consola para depuración
+  useEffect(() => {
+    if (loadError) {
+      console.error("Error al cargar el modelo:", loadError);
+    }
+    if (errors && Object.keys(errors).length > 0) {
+      console.error("Errores reportados por useGLTF:", errors);
+    }
+  }, [loadError, errors]);
   
   return (
     <group 
@@ -101,10 +135,14 @@ export default function GalaxyModel({
       rotation={rotation}
       scale={[scale, scale, scale]} 
     >
-      <primitive object={scene} />
+      {scene && <primitive object={scene} />}
     </group>
   );
 }
 
-// Precargar el modelo para mejor rendimiento
-useGLTF.preload('/Models/need_some_space.glb');
+// Precarga con la nueva función de ruta
+try {
+  useGLTF.preload(getResourcePath('Models/need_some_space.glb'));
+} catch (error) {
+  console.error("Error en la precarga del modelo:", error);
+}
