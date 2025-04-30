@@ -79,23 +79,23 @@ const Home = ({ darkMode }) => {
     let isValid = true;
     
     if (!formState.name.trim()) {
-      tempErrors.name = "El nombre es obligatorio";
+      tempErrors.name = t("form.errors.nameRequired");
       isValid = false;
     }
     
     if (!formState.email) {
-      tempErrors.email = "El email es obligatorio";
+      tempErrors.email = t("form.errors.emailRequired");
       isValid = false;
     } else if (!/\S+@\S+\.\S+/.test(formState.email)) {
-      tempErrors.email = "El formato del email no es válido";
+      tempErrors.email = t("form.errors.emailInvalid");
       isValid = false;
     }
     
     if (!formState.message.trim()) {
-      tempErrors.message = "El mensaje es obligatorio";
+      tempErrors.message = t("form.errors.messageRequired");
       isValid = false;
     } else if (formState.message.trim().length < 10) {
-      tempErrors.message = "El mensaje debe tener al menos 10 caracteres";
+      tempErrors.message = t("form.errors.messageLength");
       isValid = false;
     }
     
@@ -171,7 +171,7 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
       // Mostrar mensaje de éxito
       setFormStatus({
         type: 'success',
-        message: '¡Mensaje enviado con éxito! Me pondré en contacto contigo pronto.'
+        message: t('contact.success')
       });
       
       // Limpiar formulario
@@ -181,7 +181,7 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
     } catch (error) {
       console.error('Error completo:', error);
       
-      let errorMessage = 'Error al enviar el mensaje. ';
+      let errorMessage = t('contact.error');
       
       if (error.status === 400) {
         errorMessage += 'Verifica que los datos ingresados sean correctos.';
@@ -625,9 +625,10 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
     { icon: <FaServer />, label: 'Backend', category: 'backend' },
   ], []);
 
+  // Actualizar los títulos de tarjetas de expertise
   const expertiseCardsData = useMemo(() => [
     {
-      title: "🛠 Tech Stack Principal",
+      title: t("expertise.techStack"),
       items: [
         `<strong>Frontend:</strong> ${technicalSkillsData.frontend.slice(0, 3).map(skill => skill.name).join(', ')}`,
         `<strong>Backend:</strong> ${technicalSkillsData.backend.slice(0, 3).map(skill => skill.name).join(', ')}`,
@@ -636,17 +637,17 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
       ]
     },
     {
-      title: "🚀 Experiencia Clave",
+      title: t("expertise.keyExperience"),
       items: [
         `${experienceData[0].position} en ${experienceData[0].company}`,
         ...experienceData[0].achievements.slice(0, 3)
       ]
     },
     {
-      title: "🏆 Certificaciones",
+      title: t("expertise.certifications"),
       items: certificationData.slice(0, 4).map(cert => `${cert.name} (${cert.issuer})`)
     }
-  ], [technicalSkillsData, experienceData, certificationData]);
+  ], [technicalSkillsData, experienceData, certificationData, t]);
 
   const skillCategories = useMemo(() => [
     { id: 'frontend', label: 'Frontend', icon: <FaCode /> },
@@ -757,14 +758,12 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
             transition={{ duration: 0.4 }}
           >
             <p className="about-intro">
-            Como Desarrollador Full Stack especializado en tecnologías modernas, me apasiona crear soluciones digitales que impacten positivamente en la vida de las personas. Permíteme compartir un poco más sobre mi trayectoria y pasiones.
-            <br /><br />
-          </p>
-          <p className="about-details">
-            Mi enfoque profesional combina el desarrollo Full Stack con soluciones cloud, siempre buscando la innovación y la eficiencia en cada proyecto. Más allá del código, soy un entusiasta de la astronomía y la ciencia ficción, lo que alimenta mi curiosidad y mi deseo constante de aprendizaje.
-            <br /><br />
-            Mi otra gran pasión es el fitness y la salud. Tras trabajar durante un año en el sector y mantener una rutina de entrenamiento desde los 16 años, he desarrollado proyectos orientados a facilitar el acceso al mundo del fitness. Mi objetivo es crear herramientas digitales que eliminen barreras y hagan más accesible un estilo de vida saludable para todos.
-          </p>
+              {t('aboutMe.intro')}
+              <br /><br />
+            </p>
+            <p className="about-details">
+              {t('aboutMe.details')}
+            </p>
           </motion.div>
           
           <motion.div 
@@ -779,11 +778,11 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
               {Object.keys(skillsByCategory).map(category => (
                 <motion.div key={category} className="skill-category-section">
                   <h4 className="skill-section-heading">
-                    {category === 'frontend' && <><FaCode className="section-icon" /> Frontend</>}
-                    {category === 'backend' && <><FaServer className="section-icon" /> Backend</>}
-                    {category === 'database' && <><FaDatabase className="section-icon" /> Bases de datos</>}
-                    {category === 'devops' && <><FaCloud className="section-icon" /> DevOps & Cloud</>}
-                    {category === 'languages' && <><BiCodeAlt className="section-icon" /> Lenguajes</>}
+                    {category === 'frontend' && <><FaCode className="section-icon" /> {t('Frontend')}</>}
+                    {category === 'backend' && <><FaServer className="section-icon" /> {t('Backend')}</>}
+                    {category === 'database' && <><FaDatabase className="section-icon" /> {t('Bases de Datos')}</>}
+                    {category === 'devops' && <><FaCloud className="section-icon" /> {t('DevOps & Cloud')}</>}
+                    {category === 'languages' && <><BiCodeAlt className="section-icon" /> {t('Lenguajes')}</>}
                   </h4>
                   <div className="skill-icons-grid">
                     {skillsByCategory[category].map((skill, idx) => (
@@ -999,7 +998,7 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
                 <h4 className="experience-company">{exp.company} • {exp.location}</h4>
                 <p className="experience-description">{exp.description}</p>
                 <div className="experience-achievements">
-                  <h5>Logros principales:</h5>
+                  <h5>{t('Logros principales:')}</h5>
                   <ul>
                     {exp.achievements.map((achievement, i) => (
                       <li key={i}>{achievement}</li>
@@ -1090,7 +1089,7 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
                   value={formState.name}
                   onChange={handleInputChange}
                   className={`form-input ${errors.name ? 'input-error' : ''}`}
-                  placeholder={t('Tu nombre completo')}
+                  placeholder={t('form.namePlaceholder')}
                   required
                 />
                 {errors.name && <p className="error-message">{errors.name}</p>}
@@ -1107,7 +1106,7 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
                   value={formState.email}
                   onChange={handleInputChange}
                   className={`form-input ${errors.email ? 'input-error' : ''}`}
-                  placeholder={t('tu@email.com')}
+                  placeholder={t('form.emailPlaceholder')}
                   required
                 />
                 {errors.email && <p className="error-message">{errors.email}</p>}
@@ -1123,7 +1122,7 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
                   value={formState.message}
                   onChange={handleInputChange}
                   className={`form-textarea ${errors.message ? 'input-error' : ''}`}
-                  placeholder={t('Cuéntame sobre tu proyecto o consulta')}
+                  placeholder={t('form.messagePlaceholder')}
                   required
                 ></textarea>
                 {errors.message && <p className="error-message">{errors.message}</p>}
@@ -1134,7 +1133,7 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
                 className="form-submit"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? t('Enviando...') : t('Enviar mensaje')}
+                {isSubmitting ? t('form.sending') : t('form.sendMessage')}
               </button>
               
               {formStatus.message && (

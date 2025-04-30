@@ -64,6 +64,94 @@ const resources = {
             "challenges": "Integrating multiple identity providers while maintaining a unified user experience"
          }
          // Agrega más proyectos según se requiera...
+      },
+      
+      // Secciones de la página
+      "sections": {
+        "hero": "Hero",
+        "about": "About",
+        "projects": "Projects",
+        "experience": "Experience",
+        "contact": "Contact"
+      },
+      
+      // Componente Project
+      "project": {
+        "noImages": "No images available for this project",
+        "description": "Description",
+        "features": "Features",
+        "challenges": "Challenges",
+        "technologies": "Technologies",
+        "viewProject": "View Project",
+        "viewCode": "View Code"
+      },
+      
+      // About Section
+      "about": {
+        "title": "About Me",
+        "description": "I am a Full Stack Developer passionate about creating digital solutions.",
+        "downloadCV": "Download CV"
+      },
+      
+      // Experience Section
+      "experience": {
+        "title": "Experience",
+        "skills": "Skills",
+        "workHistory": "Work History"
+      },
+      
+      // Contact Section
+      "contact": {
+        "title": "Contact Me",
+        "name": "Name",
+        "email": "Email",
+        "message": "Message",
+        "send": "Send Message",
+        "success": "Your message has been sent successfully!",
+        "error": "There was an error sending your message. Please try again."
+      },
+      // About section additional texts
+      "Perfil Profesional": "Professional Profile",
+      "Contacto Directo": "Direct Contact",
+      "DevOps & Cloud": "DevOps & Cloud",
+      "Lenguajes": "Languages",
+      
+      // Expertise cards
+      "expertise": {
+        "techStack": "🛠 Main Tech Stack",
+        "keyExperience": "🚀 Key Experience",
+        "certifications": "🏆 Certifications"
+      },
+      
+      // Professional profile text
+      "aboutMe": {
+        "intro": "As a Full Stack Developer specialized in modern technologies, I am passionate about creating digital solutions that positively impact people's lives. Let me share a bit more about my career and passions.",
+        "details": "My professional approach combines Full Stack development with cloud solutions, always seeking innovation and efficiency in each project. Beyond code, I am an enthusiast of astronomy and science fiction, which fuels my curiosity and constant desire to learn. My other great passion is fitness and health. After working in the sector for a year and maintaining a training routine since I was 16, I've developed projects aimed at facilitating access to the fitness world. My goal is to create digital tools that eliminate barriers and make a healthy lifestyle more accessible to everyone."
+      },
+      
+      // Experience section
+      "Experiencia Profesional": "Professional Experience",
+      "Logros principales:": "Main achievements:",
+      
+      // Contact section additional texts
+      "¿Tienes un proyecto en mente?": "Do you have a project in mind?",
+      "Estoy disponible para discutir nuevas oportunidades y colaboraciones. No dudes en contactarme para cualquier consulta o propuesta.": "I'm available to discuss new opportunities and collaborations. Don't hesitate to contact me for any inquiry or proposal.",
+      "Teléfono": "Phone",
+      
+      // Form placeholders
+      "form": {
+        "namePlaceholder": "Your full name",
+        "emailPlaceholder": "your@email.com",
+        "messagePlaceholder": "Tell me about your project or inquiry",
+        "sending": "Sending...",
+        "sendMessage": "Send message",
+        "errors": {
+            "nameRequired": "El nombre es obligatorio",
+            "emailRequired": "El email es obligatorio",
+            "emailInvalid": "El formato del email no es válido",
+            "messageRequired": "El mensaje es obligatorio",
+            "messageLength": "El mensaje debe tener al menos 10 caracteres"
+         }
       }
     }
   },
@@ -127,6 +215,87 @@ const resources = {
             "challenges": "Integrar múltiples proveedores de identidad manteniendo una experiencia unificada"
          }
          // Agrega más proyectos según se requiera...
+      },
+      
+      // Secciones de la página
+      "sections": {
+        "hero": "Inicio",
+        "about": "Sobre Mí",
+        "projects": "Proyectos",
+        "experience": "Experiencia",
+        "contact": "Contacto"
+      },
+      
+      // Componente Project
+      "project": {
+        "noImages": "No hay imágenes disponibles para este proyecto",
+        "description": "Descripción",
+        "features": "Características",
+        "challenges": "Desafíos",
+        "technologies": "Tecnologías",
+        "viewProject": "Ver Proyecto",
+        "viewCode": "Ver Código"
+      },
+      
+      // About Section
+      "about": {
+        "title": "Sobre Mí",
+        "description": "Soy un Desarrollador Full Stack apasionado por crear soluciones digitales.",
+        "downloadCV": "Descargar CV"
+      },
+      
+      // Experience Section
+      "experience": {
+        "title": "Experiencia",
+        "skills": "Habilidades",
+        "workHistory": "Historial Laboral"
+      },
+      
+      // Contact Section
+      "contact": {
+        "title": "Contáctame",
+        "name": "Nombre",
+        "email": "Correo electrónico",
+        "message": "Mensaje",
+        "send": "Enviar Mensaje",
+        "success": "¡Tu mensaje ha sido enviado exitosamente!",
+        "error": "Hubo un error al enviar tu mensaje. Por favor, inténtalo de nuevo."
+      },
+      // About section additional texts
+      "Perfil Profesional": "Perfil Profesional",
+      "Contacto Directo": "Contacto Directo",
+      "DevOps & Cloud": "DevOps & Cloud",
+      "Lenguajes": "Lenguajes",
+      
+      // Expertise cards
+      "expertise": {
+        "techStack": "🛠 Tech Stack Principal",
+        "keyExperience": "🚀 Experiencia Clave",
+        "certifications": "🏆 Certificaciones"
+      },
+      
+      // Professional profile text
+      "aboutMe": {
+        "intro": "Como Desarrollador Full Stack especializado en tecnologías modernas, me apasiona crear soluciones digitales que impacten positivamente en la vida de las personas. Permíteme compartir un poco más sobre mi trayectoria y pasiones.",
+        "details": "Mi enfoque profesional combina el desarrollo Full Stack con soluciones cloud, siempre buscando la innovación y la eficiencia en cada proyecto. Más allá del código, soy un entusiasta de la astronomía y la ciencia ficción, lo que alimenta mi curiosidad y mi deseo constante de aprendizaje. Mi otra gran pasión es el fitness y la salud. Tras trabajar durante un año en el sector y mantener una rutina de entrenamiento desde los 16 años, he desarrollado proyectos orientados a facilitar el acceso al mundo del fitness. Mi objetivo es crear herramientas digitales que eliminen barreras y hagan más accesible un estilo de vida saludable para todos."
+      },
+      
+      // Experience section
+      "Experiencia Profesional": "Experiencia Profesional",
+      "Logros principales:": "Logros principales:",
+      
+      // Contact section additional texts
+      "¿Tienes un proyecto en mente?": "¿Tienes un proyecto en mente?",
+      "Estoy disponible para discutir nuevas oportunidades y colaboraciones. No dudes en contactarme para cualquier consulta o propuesta.": "Estoy disponible para discutir nuevas oportunidades y colaboraciones. No dudes en contactarme para cualquier consulta o propuesta.",
+      "Teléfono": "Teléfono",
+      
+      // Form placeholders
+      "form": {
+        "namePlaceholder": "Tu nombre completo",
+        "emailPlaceholder": "tu@email.com",
+        "messagePlaceholder": "Cuéntame sobre tu proyecto o consulta",
+        "sending": "Enviando...",
+        "sendMessage": "Enviar mensaje"
       }
     }
   }

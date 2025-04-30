@@ -349,14 +349,15 @@
 
 /* Mejorar botón de cierre */
 .lightbox-close {
-  z-index: 1001;                      /* Siempre encima del header */
+  z-index: 1001;
   position: absolute;
   top: 1.2rem;
   right: 1.2rem;
   width: var(--lightbox-btn-size);
   height: var(--lightbox-btn-size);
   border: none;
-  background: rgba(30, 30, 30, 0.8);
+  background: rgba(40, 40, 40, 0.9);
+  color: white;
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -365,15 +366,11 @@
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #fff;
-  font-size: 1.5rem;
 }
 
 .lightbox-close:hover {
-  transform: scale(1.1) rotate(90deg);
-  background: rgba(var(--primary-rgb), 0.8);
-  box-shadow: 0 5px 15px rgba(var(--primary-rgb), 0.5);
+  background: rgba(var(--primary-rgb), 0.9);
+  transform: scale(1.1);
 }
 
 .lightbox-close svg {
@@ -473,12 +470,35 @@
   transform: translateY(-50%) scale(0.95);
 }
 
-.lightbox-nav svg {
-  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.8));
-  width: 30px;
-  height: 30px;
-  stroke-width: 3px;
+/* Ajustar las proporciones de los SVG en los botones */
+.lightbox-overlay .lightbox-nav svg {
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.8));
+  width: 24px !important; /* Proporción adecuada para mantener forma */
+  height: 38px !important;
+  stroke-width: 2px;
+  color: white;
+  transition: all 0.3s ease;
+  opacity: 0.9;
+  overflow: visible; /* Asegurar que el trazo no se recorte */
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
+
+/* Aumentar el tamaño del área clicable aunque el ícono sea más estrecho */
+.lightbox-nav {
+  padding: 0 15px; /* Añadir padding horizontal para aumentar área táctil */
+  width: var(--lightbox-btn-size);
+  height: var(--lightbox-btn-size);
+  min-width: 60px; /* Asegurar un área mínima de toque */
+}
+
+.lightbox-overlay .lightbox-close svg {
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.8));
+  width: 38px !important; /* Forzar el tamaño */
+  height: 38px !important;
+  stroke-width: 2px;
+}
+
 
 .lightbox-thumbnails {
   display: flex;

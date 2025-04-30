@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
@@ -6,25 +6,38 @@ import './Galaxy.css';
 
 // Definir rutas de recursos de manera más flexible
 const getResourcePath = (path) => {
-  // Obtener la URL base actual
   const baseUrl = window.location.origin;
-  // Si ya es una URL completa, devolverla como está
   if (path.startsWith('http')) return path;
-  // Si es una ruta absoluta, asegurarse de que comience con /
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-  // Combinar con la URL base
   return `${baseUrl}${normalizedPath}`;
 };
 
+// Caché para texturas
+const textureCache = new Map();
+
+// Función para cargar texturas con caché
+const loadTexture = (path) => {
+  if (textureCache.has(path)) {
+    return textureCache.get(path);
+  }
+  
+  const texture = new THREE.TextureLoader().load(getResourcePath(path));
+  textureCache.set(path, texture);
+  return texture;
+};
+
 export default function GalaxyModel({ 
-  path = 'Models/need_some_space.glb', // Eliminado / al principio
+  path = 'Models/need_some_space.glb',
   scale = 2, 
   position = [0, 0, 0],
-  rotation = [0, 0, 0]
+  rotation = [0, 0, 0],
+  isVisible = true,
+  onLoaded
 }) {
   const modelRef = useRef();
   const [modelLoaded, setModelLoaded] = useState(false);
   const [loadError, setLoadError] = useState(null);
+  const prevVisibleRef = useRef(isVisible);
   
   // Cargar el modelo GLB con manejo de errores
   const { scene, errors } = useGLTF(getResourcePath(path), true, 
@@ -35,90 +48,131 @@ export default function GalaxyModel({
     () => {
       console.log('Modelo cargado correctamente');
       setModelLoaded(true);
+      if (onLoaded) onLoaded();
     }
   );
   
-  // Actualización en el useEffect para mejorar los colores galácticos
+  // Materiales memorizados para mejorar rendimiento
+  const galaxyMaterials = useMemo(() => {
+    const materials = {
+      base: new THREE.MeshStandardMaterial({
+        color: new THREE.Color('#c7d3ff'),
+        emissive: new THREE.Color('#4169e1'),
+        emissiveIntensity: 0.3,
+        metalness: 0.6,
+        roughness: 0.2,
+      }),
+      core: new THREE.MeshStandardMaterial({
+        color: new THREE.Color('#fff2d6'),
+        emissive: new THREE.Color('#ffa726'),
+        emissiveIntensity: 0.7,
+        metalness: 0.8,
+        roughness: 0.1,
+      }),
+      arms: new THREE.MeshStandardMaterial({
+        color: new THREE.Color('#b6ccff'),
+        emissive: new THREE.Color('#3d5afe'),
+        emissiveIntensity: 0.4,
+        metalness: 0.5,
+        roughness: 0.3,
+      }),
+      intermediate: new THREE.MeshStandardMaterial({
+        color: new THREE.Color('#d4e0ff'),
+        emissive: new THREE.Color('#5c7cfa'),
+        emissiveIntensity: 0.35,
+        metalness: 0.4,
+        roughness: 0.4,
+      })
+    };
+    
+    // Precargar la textura en caché si existe
+    try {
+      const texture = loadTexture('textures/galaxy_variation.jpg');
+      texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+      materials.arms.map = texture;
+    } catch (error) {
+      console.log("Textura no encontrada, usando color plano", error);
+    }
+    
+    return materials;
+  }, []);
+  
+  // Actualización optimizada de materiales
   useEffect(() => {
     if (scene) {
+      const meshes = [];
+      
       scene.traverse((child) => {
         if (child.isMesh) {
-          // Crear material base mejorado con más brillo
-          const galaxyMaterial = new THREE.MeshStandardMaterial({
-            color: new THREE.Color('#c7d3ff'),      // Color base más brillante
-            emissive: new THREE.Color('#4169e1'),   // Mantener emisivo azul
-            emissiveIntensity: 0.3,                 // Aumentar intensidad
-            metalness: 0.6,                         // Más metalicidad para reflejos
-            roughness: 0.2,                         // Menor rugosidad = más brillo
-          });
-          
-          // Detección del núcleo galáctico
-          if (child.name.includes('core') || 
-              (child.position.length() < 2 && child.geometry.boundingSphere?.radius > 1)) {
-            // Colores más cálidos e intensos para el núcleo
-            galaxyMaterial.color = new THREE.Color('#fff2d6');      // Amarillo más brillante
-            galaxyMaterial.emissive = new THREE.Color('#ffa726');   // Naranja ámbar
-            galaxyMaterial.emissiveIntensity = 0.7;                 // Mayor brillo
-            galaxyMaterial.metalness = 0.8;                         // Más reflectivo
-            galaxyMaterial.roughness = 0.1;                         // Muy pulido
-          }
-          
-          // Brazos espirales externos
-          else if (child.name.includes('arm') || child.geometry.boundingSphere?.radius > 3) {
-            // Colores más azules para los brazos
-            galaxyMaterial.color = new THREE.Color('#b6ccff');      // Azul celeste
-            galaxyMaterial.emissive = new THREE.Color('#3d5afe');   // Azul intenso
-            galaxyMaterial.emissiveIntensity = 0.4;
-            
-            // Añadir puntos rojizos para regiones de formación estelar
-            const textureLoader = new THREE.TextureLoader();
-            try {
-              // Usar la función de ruta relativa para cargar la textura
-              galaxyMaterial.map = textureLoader.load(getResourcePath('textures/galaxy_variation.jpg'));
-              galaxyMaterial.map.wrapS = galaxyMaterial.map.wrapT = THREE.RepeatWrapping;
-            } catch (error) {
-              console.log("Textura no encontrada, usando color plano:", error);
-            }
-
-            // Variación de color según posición
-            if (child.position.x > 0 && child.position.z > 0) {
-              // Cuadrante con tono más azulado (estrellas jóvenes)
-              galaxyMaterial.color = new THREE.Color('#a6c8ff');
-              galaxyMaterial.emissive = new THREE.Color('#2979ff');
-            } else if (child.position.x < 0 && child.position.z > 0) {
-              // Cuadrante con tono más rojizo (regiones de formación estelar)
-              galaxyMaterial.color = new THREE.Color('#d6c8ff');
-              galaxyMaterial.emissive = new THREE.Color('#7c4dff');
-            } else if (child.position.x < 0 && child.position.z < 0) {
-              // Cuadrante con tono más verdoso (regiones de polvo cósmico)
-              galaxyMaterial.color = new THREE.Color('#b8d4ff');
-              galaxyMaterial.emissive = new THREE.Color('#0091ea');
-            }
-          }
-          
-          // Regiones intermedias
-          else {
-            galaxyMaterial.color = new THREE.Color('#d4e0ff');      // Azul pálido
-            galaxyMaterial.emissive = new THREE.Color('#5c7cfa');   // Azul medio
-            galaxyMaterial.emissiveIntensity = 0.35;
-          }
-          
-          // Aplicar el nuevo material
-          child.material = galaxyMaterial;
+          meshes.push(child);
         }
       });
+      
+      // Procesar en lotes para evitar bloquear el hilo principal
+      const processBatch = (startIdx, batchSize) => {
+        const endIdx = Math.min(startIdx + batchSize, meshes.length);
+        
+        for (let i = startIdx; i < endIdx; i++) {
+          const child = meshes[i];
+          
+          // Clonar material para evitar compartir referencias
+          let material;
+          
+          if (child.name.includes('core') || 
+              (child.position.length() < 2 && child.geometry.boundingSphere?.radius > 1)) {
+            material = galaxyMaterials.core.clone();
+          } else if (child.name.includes('arm') || child.geometry.boundingSphere?.radius > 3) {
+            material = galaxyMaterials.arms.clone();
+            
+            // Variación de color por posición (simplificada)
+            if (child.position.x > 0 && child.position.z > 0) {
+              material.color.set('#a6c8ff');
+              material.emissive.set('#2979ff');
+            } else if (child.position.x < 0 && child.position.z > 0) {
+              material.color.set('#d6c8ff');
+              material.emissive.set('#7c4dff');
+            } else if (child.position.x < 0 && child.position.z < 0) {
+              material.color.set('#b8d4ff');
+              material.emissive.set('#0091ea');
+            }
+          } else {
+            material = galaxyMaterials.intermediate.clone();
+          }
+          
+          // Aplicar el nuevo material con optimizaciones
+          child.material = material;
+          
+          // Optimizar la geometría si es posible
+          if (child.geometry && !child.geometry.boundingBox) {
+            child.geometry.computeBoundingBox();
+          }
+        }
+        
+        // Procesar el siguiente lote si quedan meshes
+        if (endIdx < meshes.length) {
+          setTimeout(() => processBatch(endIdx, batchSize), 0);
+        }
+      };
+      
+      // Iniciar procesamiento por lotes (50 meshes por lote)
+      processBatch(0, 50);
     }
-  }, [scene]);
+  }, [scene, galaxyMaterials]);
   
-  // Animar la rotación del modelo - más lenta y centrada
+  // Animar el modelo solo cuando es visible
   useFrame((state, delta) => {
-    if (modelRef.current) {
-      // Rotación más lenta y natural
+    // Verificar cambios de visibilidad
+    if (prevVisibleRef.current !== isVisible) {
+      prevVisibleRef.current = isVisible;
+    }
+    
+    // Solo animar si es visible
+    if (modelRef.current && isVisible) {
       modelRef.current.rotation.y += delta * 0.002;
     }
   });
 
-  // Mostrar errores en la consola para depuración
+  // Logging optimizado solo cuando hay cambios
   useEffect(() => {
     if (loadError) {
       console.error("Error al cargar el modelo:", loadError);
@@ -128,21 +182,30 @@ export default function GalaxyModel({
     }
   }, [loadError, errors]);
   
+  // Si no es visible, devolver null para evitar renderizado
+  if (!isVisible && !modelLoaded) {
+    return null;
+  }
+  
   return (
     <group 
       ref={modelRef}
       position={position} 
       rotation={rotation}
       scale={[scale, scale, scale]} 
+      visible={isVisible}
     >
       {scene && <primitive object={scene} />}
     </group>
   );
 }
 
-// Precarga con la nueva función de ruta
-try {
-  useGLTF.preload(getResourcePath('Models/need_some_space.glb'));
-} catch (error) {
-  console.error("Error en la precarga del modelo:", error);
+// Precarga condicional: sólo precargar si estamos en desktop o dispositivos de alto rendimiento
+if (!navigator.userAgent.match(/Android|iPhone|iPad|iPod/i) || 
+    window.devicePixelRatio <= 2) {
+  try {
+    useGLTF.preload(getResourcePath('Models/need_some_space.glb'));
+  } catch (error) {
+    console.error("Error en la precarga del modelo:", error);
+  }
 }

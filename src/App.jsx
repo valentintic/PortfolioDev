@@ -7,7 +7,7 @@ import './App.css';
 import './i18n'; // Configuración de i18next
 
 const getSystemTheme = () => {
-  return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 };
 
 const getDefaultTheme = () => {

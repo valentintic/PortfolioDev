@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FiSun, FiMoon, FiDownload } from 'react-icons/fi';
+import { FiSun, FiMoon, FiDownload, FiX } from 'react-icons/fi';
 import { useTranslation } from 'react-i18next';
 import './Header.css';
 import { useState, useEffect } from 'react';
@@ -89,6 +89,18 @@ const Header = ({ darkMode, setDarkMode }) => {
     setIsMenuOpen(false);
   };
 
+  // Mejorar la función de apertura del menú
+  const toggleMenu = () => {
+    if (!isMenuOpen) {
+      // Al abrir el menú, bloquear scroll
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Al cerrar, restaurar scroll
+      document.body.style.overflow = '';
+    }
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <motion.header
       initial={{ y: -100 }}
@@ -154,7 +166,7 @@ const Header = ({ darkMode, setDarkMode }) => {
         {/* Hamburguesa solo mobile */}
         <button 
           className={`hamburger ${isMenuOpen ? 'open' : ''}`}
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          onClick={toggleMenu}
           aria-label={isMenuOpen ? t('Cerrar menú') : t('Abrir menú')}
         >
           <span></span>
@@ -163,8 +175,24 @@ const Header = ({ darkMode, setDarkMode }) => {
         </button>
       </div>
 
+      {/* Agregar justo antes del div mobile-menu */}
+      <div 
+        className={`menu-overlay ${isMenuOpen ? 'open' : ''}`} 
+        onClick={() => setIsMenuOpen(false)}
+      ></div>
+
       {/* Menú Mobile */}
       <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
+        {/* Botón para cerrar el menú móvil */}
+        <button 
+          className="mobile-menu-close"
+          onClick={() => setIsMenuOpen(false)}
+          aria-label={t('Cerrar menú')}
+        >
+          <span></span>
+          <span></span>
+        </button>
+        
         {navLinks.map((link) => (
           <a 
             key={link.section}
