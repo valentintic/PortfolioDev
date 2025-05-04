@@ -6,11 +6,18 @@ import InformacionUsuario from '../../assets/NutriSmart/InformacionUsuario.jpg';
 import Perfil from '../../assets/NutriSmart/Perfil.jpg';
 import EscanerQR from '../../assets/NutriSmart/EscanerQR.jpg';
 
+import Alimentos from '../../assets/NutriSmartBackEnd/Alimentos.jpg';
+import DietasBackEnd from '../../assets/NutriSmartBackEnd/Dieta.jpg';
+import HistorialBackEnd from '../../assets/NutriSmartBackEnd/Historial.jpg';
+import GoogleFitBackEnd from '../../assets/NutriSmartBackEnd/GoogleFit.jpg';
+import Auth from '../../assets/NutriSmartBackEnd/Auth.jpg';
+import Usuarios from '../../assets/NutriSmartBackEnd/Usuarios.jpg';
+
 export const skillsData = {
   frontend: [
     { 
       id: 1,
-      title: 'projects.nutrismart.title',
+      title: 'projects.nutrismart.title.frontend',
       description: 'projects.nutrismart.description',
       images: [
         IndexNutriSmart,
@@ -21,106 +28,53 @@ export const skillsData = {
         Perfil,
         EscanerQR
       ],
-      technologies: ['React 18', 'Redux', 'Google Fit API', 'OAuth 2.0', 'JWT'],
-      year: 2023,
+      technologies: ['React 18', 'JavaScript', 'HTML5', 'CSS3'],
+      year: 2025,
       repository: 'https://github.com/valentintic/DietasAutomaticas',
-      demo: 'https://github.com/valentintic/DietasAutomaticas',
-      role: 'Desarrollador Full Stack',
+      demo: 'https://dietasautomaticasnetvdp-hsg2ddc6g5g0ewgg.westeurope-01.azurewebsites.net/',
+      role: 'Full Stack Developer',
       features: [
-        'projects.nutrismart.features.item1',
-        'projects.nutrismart.features.item2',
-        'projects.nutrismart.features.item3',
-        'projects.nutrismart.features.item4',
-        'projects.nutrismart.features.item5',
-        'projects.nutrismart.features.item6',
-        'projects.nutrismart.features.item7'
+        'projects.nutrismart.features.frontend.item1',
+        'projects.nutrismart.features.frontend.item2',
+        'projects.nutrismart.features.frontend.item3',
+        'projects.nutrismart.features.frontend.item4',
+        'projects.nutrismart.features.frontend.item5',
+        'projects.nutrismart.features.frontend.item6',
+        'projects.nutrismart.features.frontend.item7'
       ],
       challenges: 'projects.nutrismart.challenges'
     },
   ],
   backend: [
-    {
-      id: 4,
-      title: 'Tajamar User Management', 
-      description: 'Management system for user administration, teachers, and course resources with features for technical talks and access control. Created a system that streamlined administrative tasks by 35% and reduced resource allocation errors by 28%, while implementing access control features that improved security compliance by 40%.',
-      images: [
-        'https://picsum.photos/id/200/400/300',
-        'https://picsum.photos/id/201/400/300',
-        'https://picsum.photos/id/202/400/300'
-      ],
-      technologies: ['Java 21', 'Spring Boot', 'JWT', 'OAuth 2.0', 'C#', 'ASP.NET'],
-      year: 2023,
-      repository: 'https://github.com/valentintic/tajamar-user-management',
-      role: 'Backend Developer',
-      features: [
-        'User administration and management',
-        'Teacher resource allocation',
-        'Course resources management',
-        'Technical talks scheduling system',
-        'Role-based access control',
-        'Security compliance features'
-      ],
-      challenges: 'Implementing a secure and scalable access control system while maintaining ease of use',
-      performance: {
-        adminTaskEfficiency: 'Streamlined administrative tasks by 35%',
-        resourceErrors: 'Reduced resource allocation errors by 28%',
-        securityCompliance: 'Improved security compliance by 40%'
-      }
-    },
     { 
       id: 5,
-      title: 'Auth Service', 
-      description: 'Sistema de autenticación robusto implementado con Spring Boot, OAuth 2.0 y PostgreSQL para gestionar el acceso seguro a las aplicaciones. Soporta múltiples proveedores de identidad y autenticación multifactor.',
+      title: 'projects.nutrismart.title.backend',
+      description: 'projects.nutrismart.description',
       images: [
-        'https://picsum.photos/id/210/400/300',
-        'https://picsum.photos/id/211/400/300',
-        'https://picsum.photos/id/212/400/300'
+        Alimentos,
+        Auth,
+        DietasBackEnd,
+        HistorialBackEnd,
+        Usuarios,
+        GoogleFitBackEnd,
       ],
-      technologies: ['Spring Boot', 'OAuth 2.0', 'PostgreSQL', 'JWT'],
-      year: 2022,
-      repository: 'https://github.com/valentintic/auth-service',
-      role: 'Backend Developer',
-      features: [
-        'Autenticación OAuth 2.0 y OpenID Connect',
-        'Gestión de usuarios, roles y permisos',
-        'Seguridad y encriptación de datos',
-        'Autenticación multifactor (MFA)',
-        'Single Sign-On (SSO) entre aplicaciones'
-      ],
-      challenges: 'Integración con múltiples proveedores de identidad manteniendo una experiencia unificada',
-      performance: {
-        throughput: '5,000 auth/s',
-        latency: '<100ms',
-        securityAudit: 'OWASP Top 10 compliant'
-      }
-    },
-    { 
-      id: 6,
-      title: 'HelOps Web Applications', 
-      description: 'Developed web applications using React and Java Spring Boot for Anadat Technology, with a focus on system performance optimization and reduced load times.',
-      images: [
-        'https://picsum.photos/id/213/400/300',
-        'https://picsum.photos/id/214/400/300',
-        'https://picsum.photos/id/215/400/300'
-      ],
-      technologies: ['React', 'Spring Boot', 'Java', 'AWS', 'Kubernetes'],
-      year: 2024,
-      repository: 'https://github.com/valentintic/helops-applications',
+      technologies: ['ASP.NET', 'C#', 'Azure', 'Google Fit API', 'OAuth 2.0', 'JWT', 'SQL Server', 'Entity Framework', 'Swagger'],  
+      year: 2025,
+      repository: 'https://github.com/valentintic/DietasAutomaticas',
+      demo: 'https://nutrismartapivdp-d6dgezd4gxcsf3fh.spaincentral-01.azurewebsites.net/index.html',
       role: 'Full Stack Developer',
       features: [
-        'High-performance web applications',
-        'Optimized system architecture',
-        'Cloud infrastructure integration',
-        'Authentication with JWT and OAuth 2.0',
-        'Responsive UI with modern JavaScript frameworks'
+        'projects.nutrismart.features.backend.item1',
+        'projects.nutrismart.features.backend.item2',
+        'projects.nutrismart.features.backend.item3',
+        'projects.nutrismart.features.backend.item4',
+        'projects.nutrismart.features.backend.item5',
+        'projects.nutrismart.features.backend.item6',
+        'projects.nutrismart.features.backend.item7',
+        'projects.nutrismart.features.backend.item8',
+        'projects.nutrismart.features.backend.item9',
       ],
-      challenges: 'Optimizing application performance while maintaining scalability in cloud environments',
-      performance: {
-        systemPerformance: 'Increased by 7%',
-        loadTimes: 'Reduced by 10%',
-        deploymentTime: 'Reduced by 12%',
-        downtime: 'Reduced by 10%'
-      }
+      challenges: 'projects.nutrismart.challenges'
     },
   ],
   database: [
@@ -213,14 +167,14 @@ export const experienceData = [
   {
     id: 1,
     company: 'HelOps, Anadat Technology',
-    position: 'Full Stack Developer',
+    position: 'experience.position.fullstack',
     period: '2024',
     location: 'Madrid, España',
-    description: 'Desarrollo de aplicaciones web y optimización de infraestructuras cloud.',
+    description: 'experience.description.helops',
     achievements: [
-      'Developed web applications using React and Java Spring Boot, increasing system performance by 7% and reducing load times by 10%.',
-      'Optimized AWS cloud infrastructures with Kubernetes, reducing deployment time by 12% and downtime by 10%.',
-      'Implemented authentication systems with JWT and OAuth 2.0'
+      'experience.achievements.helops.item1',
+      'experience.achievements.helops.item2',
+      'experience.achievements.helops.item3'
     ],
     technologies: ['React', 'Java Spring Boot', 'AWS', 'Kubernetes', 'JWT', 'OAuth 2.0']
   },

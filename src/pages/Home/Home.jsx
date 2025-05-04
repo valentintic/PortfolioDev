@@ -602,18 +602,27 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
       (entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
+            const id = entry.target.getAttribute('id');
+            setActiveSection(id);
           }
         });
       },
-      { threshold: 0.3, rootMargin: '-100px 0px' }
+      { 
+        threshold: 0.2, // Bajamos el threshold para mejor detección
+        rootMargin: '-50px 0px -50px 0px' // Ajustamos el margen para mejor precisión
+      }
     );
     
     sections.forEach(section => {
       observer.observe(section);
     });
     
-    return () => observer.disconnect();
+    return () => {
+      sections.forEach(section => {
+        observer.unobserve(section);
+      });
+      observer.disconnect();
+    };
   }, []);
 
   const navigationSections = useMemo(() => 
@@ -639,8 +648,10 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
     {
       title: t("expertise.keyExperience"),
       items: [
-        `${experienceData[0].position} en ${experienceData[0].company}`,
-        ...experienceData[0].achievements.slice(0, 3)
+        t("expertise-text.keyExperience.item1"),
+        t("expertise-text.keyExperience.item2"),
+        t("expertise-text.keyExperience.item3"),
+        t("expertise-text.keyExperience.item4")
       ]
     },
     {
@@ -983,37 +994,37 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
         <h2 className="section-title">{t('Experiencia Profesional')}</h2>
         
         <div className="experience-timeline">
-          {experienceData.map((exp, index) => (
-            <motion.div
-              key={index}
-              className="experience-item"
-              initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ delay: index * 0.08 }}
-            >
-              <div className="experience-content">
-                <div className="experience-date">{exp.period}</div>
-                <h3 className="experience-title">{exp.position}</h3>
-                <h4 className="experience-company">{exp.company} • {exp.location}</h4>
-                <p className="experience-description">{exp.description}</p>
-                <div className="experience-achievements">
-                  <h5>{t('Logros principales:')}</h5>
-                  <ul>
-                    {exp.achievements.map((achievement, i) => (
-                      <li key={i}>{achievement}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="experience-tech">
-                  {exp.technologies.map((tech, i) => (
-                    <span key={i} className="tech-tag">{tech}</span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
+  {experienceData.map((exp, index) => (
+    <motion.div
+      key={index}
+      className="experience-item"
+      initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ delay: index * 0.08 }}
+    >
+      <div className="experience-content">
+        <div className="experience-date">{exp.period}</div>
+        <h3 className="experience-title">{t(exp.position)}</h3>
+        <h4 className="experience-company">{exp.company} • {exp.location}</h4>
+        <p className="experience-description">{t(exp.description)}</p>
+        <div className="experience-achievements">
+          <h5>{t('experience.mainAchievements')}</h5>
+          <ul>
+            {exp.achievements.map((achievement, i) => (
+              <li key={i}>{t(achievement)}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="experience-tech">
+          {exp.technologies.map((tech, i) => (
+            <span key={i} className="tech-tag">{tech}</span>
           ))}
         </div>
+      </div>
+    </motion.div>
+  ))}
+</div>
       </motion.section>
 
       <motion.section

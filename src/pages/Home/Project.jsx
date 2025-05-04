@@ -245,7 +245,7 @@ const Project = () => {
             )}
           </div>
 
-          <div className="project-description">
+          <div className="project-description-page">
             <h2>{t('project.description', 'Descripción')}</h2>
             <p>{t(project.description)}</p>
           </div>

@@ -601,8 +601,8 @@
   font-size: 1.3rem;
   color: var(--primary-color);
 }
-  
-.project-description h2,
+
+.project-description-page h2,
 .project-features h2,
 .project-technologies h2 {
   font-size: 1.75rem;
@@ -612,7 +612,7 @@
   border-left: 4px solid var(--primary-color);
 }
   
-.project-description p {
+.project-description-page p {
   font-size: 1.1rem;
   line-height: 1.8;
   margin: 0;
@@ -919,7 +919,7 @@
     height: 2.5rem;
   }
 
-  .project-description h2,
+  .project-description-page h2,
   .project-features h2,
   .project-technologies h2 {
     font-size: 1.5rem;

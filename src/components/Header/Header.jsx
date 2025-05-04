@@ -58,7 +58,7 @@ const Header = ({ darkMode, setDarkMode }) => {
   const navLinks = [
     { name: t('Inicio'), section: 'hero' },
     { name: t('Proyectos'), section: 'projects' },
-    { name: t('Contacto'), section: 'contact' }
+    { name: t('Contacto'), section: 'contact' },
   ];
 
   // Manejar navegación a secciones
@@ -126,6 +126,13 @@ const Header = ({ darkMode, setDarkMode }) => {
             {link.name}
           </a>
         ))}
+        <a
+          href='/Portfolio'
+          className={`nav-link ${activeSection === 'portfolio' ? 'active' : ''}`}
+        >
+          Portfolio
+          </a>
+
       </nav>
 
       {/* Controles */}
