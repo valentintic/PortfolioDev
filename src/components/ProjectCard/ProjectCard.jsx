@@ -103,7 +103,7 @@ const ProjectCard = ({ id, title, description, technologies, darkMode, liveUrl, 
               className="project-details-link"
             >
               <Link to={`/proyectos/${id}`} aria-label={t('projectCard.viewDetails', 'View project details')}>
-                <FiInfo className="link-icon" />
+                <FiInfo className="link-icon text-dark"/>
               </Link>
             </motion.div>
           </motion.div>

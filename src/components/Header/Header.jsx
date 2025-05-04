@@ -24,6 +24,11 @@ const Header = ({ darkMode, setDarkMode }) => {
     return i18n.language === 'es' ? cvES : cvEN;
   };
 
+  const closeMenu = () => {
+    document.body.style.overflow = ''; // Restaurar scroll
+    setIsMenuOpen(false);
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
@@ -63,7 +68,7 @@ const Header = ({ darkMode, setDarkMode }) => {
 
   // Manejar navegación a secciones
   const handleNavigation = (sectionId) => {
-    setIsMenuOpen(false);
+    closeMenu(); // Reemplazar setIsMenuOpen(false)
     
     if (!isHomePage) {
       // Si no estamos en Home, primero navegar a Home
@@ -86,7 +91,7 @@ const Header = ({ darkMode, setDarkMode }) => {
 
   const handleLanguageChange = (lang) => {
     i18n.changeLanguage(lang);
-    setIsMenuOpen(false);
+    closeMenu();
   };
 
   // Mejorar la función de apertura del menú
@@ -185,7 +190,7 @@ const Header = ({ darkMode, setDarkMode }) => {
       {/* Agregar justo antes del div mobile-menu */}
       <div 
         className={`menu-overlay ${isMenuOpen ? 'open' : ''}`} 
-        onClick={() => setIsMenuOpen(false)}
+        onClick={closeMenu}
       ></div>
 
       {/* Menú Mobile */}
@@ -193,7 +198,7 @@ const Header = ({ darkMode, setDarkMode }) => {
         {/* Botón para cerrar el menú móvil */}
         <button 
           className="mobile-menu-close"
-          onClick={() => setIsMenuOpen(false)}
+          onClick={closeMenu}
           aria-label={t('Cerrar menú')}
         >
           <span></span>

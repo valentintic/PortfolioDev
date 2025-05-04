@@ -46,8 +46,10 @@ import htmlIcon from "../../assets/html.webp";
 import reduxIcon from "../../assets/redux.webp";
 import tailwindIcon from "../../assets/tailwind.webp";
 import thymeleafIcon from "../../assets/thymeleaf.png";
-
+import cvES from '../../assets/ValentínPreuteseiCV.pdf';
+import cvEN from '../../assets/ValentinPreuteseiCVEnglish.pdf';
 // Import data from data file
+import {FiDownload } from 'react-icons/fi';
 import { 
   skillsData, 
   experienceData, 
@@ -57,7 +59,7 @@ import {
 } from './data';
 
 const Home = ({ darkMode }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState('frontend');
   const [activeSection, setActiveSection] = useState('hero');
   const { scrollYProgress } = useScroll();
@@ -73,6 +75,11 @@ const Home = ({ darkMode }) => {
   const [formStatus, setFormStatus] = useState({ type: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
+
+
+  const getCurrentCV = () => {
+      return i18n.language === 'es' ? cvES : cvEN;
+    };
 
   const validateForm = () => {
     let tempErrors = {};
@@ -702,26 +709,29 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
             transition={{ duration: 0.6, delay: 0.1 }}
             className="hero-text"
           >
-            <h1 className="hero-name">Valentín Preutesei</h1>
-            <BitText text={t('Full Stack Developer')} className="gradient-text" />
+            <BitText text={t('Full Stack Developer & Multicloud Specialist')} className="gradient-text" />
             <p className="hero-tagline">{t('Transformando ideas en soluciones digitales')}</p>
             <div className="hero-cta">
+              
               <motion.a
                 href="#projects"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="primary-button"
               >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" className='me-2' fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"/>
+                        </svg>
                 {t('Ver Proyectos')}
               </motion.a>
-              <motion.a
-                href="#contact"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="secondary-button"
-              >
-                {t('Contacto')}
-              </motion.a>
+              <a 
+                        href={getCurrentCV()} 
+                        download={i18n.language === 'es' ? "CV_Valentin_Preutesei_ES.pdf" : "CV_Valentin_Preutesei_EN.pdf"}
+                        className="cv-download-btn"
+                      >
+                        <FiDownload className="download-icon" />
+                        <span className="download-text">{t('Curriculum')}</span>
+                      </a>
             </div>
           </motion.div>
           <motion.div 
@@ -740,14 +750,6 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
             </div>
           </motion.div>
         </div>
-        <motion.div 
-          className="scroll-indicator"
-          style={{ opacity }}
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-        >
-          <a href="#about" aria-label={t('Scroll down to About section')}>↓</a>
-        </motion.div>
       </motion.section>
 
       <motion.section
@@ -909,15 +911,6 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
               <BiCodeAlt className="social-icon" /> CodeWars
             </motion.a>
           </div>
-        </motion.div>
-        
-        <motion.div 
-          className="scroll-indicator"
-          style={{ opacity }}
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-        >
-          <a href="#project" aria-label={t('Scroll down to Projects section')}>↓</a>
         </motion.div>
       </motion.section>
 
