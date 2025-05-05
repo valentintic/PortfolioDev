@@ -224,6 +224,8 @@ const Header = ({ darkMode, setDarkMode }) => {
         <NavLink
           to="/Portfolio"
           className={({ isActive }) => `mobile-link ${isActive ? 'active' : ''}`}
+          onClick={closeMenu}
+          aria-label={t('Ir a Portfolio')}
         >
           Portfolio
         </NavLink>
