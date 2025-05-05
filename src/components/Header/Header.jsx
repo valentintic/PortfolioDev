@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 // Importamos los CV
 import cvES from '../../assets/ValentínPreuteseiCV.pdf';
 import cvEN from '../../assets/ValentinPreuteseiCVEnglish.pdf';
+import { NavLink } from 'react-router-dom';
 
 // Header.jsx
 const Header = ({ darkMode, setDarkMode }) => {
@@ -131,12 +132,13 @@ const Header = ({ darkMode, setDarkMode }) => {
             {link.name}
           </a>
         ))}
-        <a
-          href='/Portfolio'
-          className={`nav-link ${activeSection === 'portfolio' ? 'active' : ''}`}
+        <NavLink
+          to="/Portfolio"
+          className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
         >
           Portfolio
-          </a>
+        </NavLink>
+
 
       </nav>
 
