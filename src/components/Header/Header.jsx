@@ -220,6 +220,14 @@ const Header = ({ darkMode, setDarkMode }) => {
             {link.name}
           </a>
         ))}
+
+        <NavLink
+          to="/Portfolio"
+          className={({ isActive }) => `mobile-link ${isActive ? 'active' : ''}`}
+        >
+          Portfolio
+        </NavLink>
+
         
         {/* Botón de descarga CV en menú móvil */}
         <a 

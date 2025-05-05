@@ -345,7 +345,7 @@
 }
 
 .mobile-menu.open {
-  height: 40vh;
+  height: 50vh;
   padding-top: 80px;
   opacity: 1;
   visibility: visible;
