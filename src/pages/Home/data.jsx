@@ -196,7 +196,7 @@ export const educationData = [
     degree: 'Web Application Development',
     field: 'Web Development',
     period: '2022 - 2024',
-    description: 'Training in web development, Java programming, Spring Boot, JavaScript, and database management with MySQL and MongoDB.'
+    description: 'Training in web development, Java programming, Spring Boot, JavaScript, and database management with MySQL, MongoDB and SQL Server.'
   }
 ];
 
