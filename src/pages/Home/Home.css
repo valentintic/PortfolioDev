@@ -249,7 +249,6 @@
 }
 
 .primary-button, .cv-download-btn {
-  padding: 1rem 1.8rem;
   border-radius: 12px;
   font-weight: 600;
   cursor: pointer;

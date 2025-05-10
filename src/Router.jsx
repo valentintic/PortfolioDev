@@ -3,6 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 import Home from './pages/Home/Home';
 import Project from './pages/Home/Project';
 import AboutProject from './pages/AboutProject/AboutProject';
+import GalaxyBackground from './pages/InteractiveBackground/GalaxyBackground';
 
 const Router = ({ darkMode }) => {
   return (
@@ -11,6 +12,7 @@ const Router = ({ darkMode }) => {
         <Route path="/" element={<Home darkMode={darkMode} />} />
         <Route path="/proyectos/:id" element={<Project darkMode={darkMode} />} />
         <Route path="/Portfolio" element={<AboutProject darkMode={darkMode} />} />
+        <Route path="/background" element={<GalaxyBackground darkMode={darkMode} />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </AnimatePresence>

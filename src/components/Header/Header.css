@@ -50,48 +50,38 @@
 
 /* Logo styling */
 .logo {
-  font-size: 1.6rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color) 50%, var(--accent-color, #6366f1));
-  background-size: 250% 250%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  animation: gradientAnimation 6s ease-in-out infinite;
   position: relative;
   cursor: pointer;
-  transition: transform 0.25s ease, text-shadow 0.25s ease;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  display: inline-block;
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: 0.5px;
+  transition: transform 0.3s ease;
 }
 
-.logo:hover {
-  transform: scale(1.04);
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+.logo-text {
+  display: inline-block;
+  position: relative;
+  z-index: 2;
 }
-
 
 .logo::after {
   content: '';
   position: absolute;
   bottom: -3px;
   left: 0;
-  width: 40%;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary-color), transparent);
-  border-radius: 3px;
+  width: 0;
+  height: 2px;
+  background: var(--accent-color);
   transition: width 0.3s ease;
+}
+
+.logo:hover {
+  transform: translateY(-2px);
 }
 
 .logo:hover::after {
   width: 100%;
-}
-
-/* Desktop navigation */
-.desktop-nav {
-  display: flex;
-  gap: 2.5rem;
 }
 
 .nav-link {
@@ -103,19 +93,20 @@
   transition: all 0.3s ease;
   letter-spacing: 0.02em;
   margin: 0 0.3rem;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
 }
 
-.nav-link::after {
-  content: '';
+.link-underline {
   position: absolute;
   bottom: -2px;
   left: 0;
   width: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary-color) 30%, var(--secondary-color));
-  transition: width 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-  border-radius: 3px;
-  opacity: 0.8;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  border-radius: 2px;
+  z-index: 1;
 }
 
 .nav-link:hover {
@@ -231,6 +222,8 @@
   background: rgba(0, 0, 0, 0.04);
   border-radius: 24px;
   padding: 0.2rem;
+  position: relative;
+  overflow: hidden;
 }
 
 .header.dark .language-selector {
@@ -246,8 +239,10 @@
   padding: 0.35rem 0.8rem;
   color: inherit;
   opacity: 0.7;
-  transition: all 0.25s ease;
+  position: relative;
+  z-index: 1;
   border-radius: 20px;
+  transition: all 0.25s cubic-bezier(0.17, 0.67, 0.83, 0.67);
 }
 
 .lang-btn:hover {
@@ -259,6 +254,27 @@
   background: var(--primary-color);
   color: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transform: scale(1);
+}
+
+.language-selector::after {
+  content: '';
+  position: absolute;
+  width: 50%;
+  height: 80%;
+  background: var(--primary-color);
+  border-radius: 16px;
+  top: 10%;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 0;
+}
+
+.language-selector:has(.lang-btn:nth-child(1).active-lang)::after {
+  transform: translateX(5%);
+}
+
+.language-selector:has(.lang-btn:nth-child(2).active-lang)::after {
+  transform: translateX(95%);
 }
 
 /* Theme button */
@@ -277,12 +293,20 @@
   background: rgba(var(--primary-rgb), 0.1);
   width: 36px;
   height: 36px;
+  transform-origin: center;
+  transition: transform 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67), 
+              background-color 0.3s ease,
+              color 0.3s ease;
 }
 
 .theme-btn:hover {
   transform: rotate(15deg) scale(1.05);
   background: rgba(var(--primary-rgb), 0.2);
   color: var(--primary-color);
+}
+
+.theme-btn:active {
+  transform: scale(0.92);
 }
 
 /* Hamburger menu */
@@ -325,131 +349,192 @@
 
 /* Mobile menu */
 .mobile-menu {
-  display: none;
   position: fixed;
   top: 0;
-  left: 0;
+  right: 0;
   width: 100%;
   height: 0;
-  background-color: var(--bg-color);
+  background-color: rgba(17, 17, 27, 0.98);
   flex-direction: column;
   align-items: center;
-  padding: 0;
+  justify-content: center;
+  z-index: 999;
   opacity: 0;
-  visibility: hidden;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  visibility: hidden; /* Oculto por defecto */
   overflow: hidden;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  padding-top: 80px; /* Espacio para el header fijo */
-  z-index: 999; /* Justo debajo del header */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: height 0.4s ease, opacity 0.4s ease, visibility 0s 0.4s;
+  pointer-events: none; /* Deshabilita interacción cuando está cerrado */
 }
 
+/* Versión light del menú móvil */
+.header.light .mobile-menu {
+  background-color: rgba(255, 255, 255, 0.98);
+}
+
+/* Estado abierto del menú móvil */
 .mobile-menu.open {
-  height: 50vh;
-  padding-top: 80px;
+  height: 100vh;
   opacity: 1;
   visibility: visible;
+  display: flex;
+  pointer-events: auto; /* Habilita interacción */
+  transition: height 0.4s ease, opacity 0.4s ease, visibility 0s;
 }
 
+/* Links del menú móvil */
+.mobile-link {
+  display: block; /* Garantiza que se muestre como bloque */
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 1.2rem;
+  padding: 0.8rem 1.2rem;
+  margin: 0.35rem 0;
+  width: 80%;
+  text-align: center;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+  position: relative; /* Para posicionamiento del subrayado */
+}
+
+.header.light .mobile-link {
+  color: #111827;
+}
+
+/* Estado activo del enlace móvil */
+.mobile-link.active {
+  color: var(--primary-color);
+  background-color: rgba(var(--primary-rgb), 0.08);
+}
+
+/* Hover del enlace móvil */
+.mobile-link:hover {
+  background-color: rgba(var(--primary-rgb), 0.1);
+  color: var(--primary-color);
+  transform: translateX(5px);
+}
+
+/* Botón de cierre para el menú móvil */
 .mobile-menu-close {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  background: transparent;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.05);
   border: none;
-  width: 25px;
-  height: 25px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   cursor: pointer;
-  z-index: 1000;
-  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1001;
+  padding: 0;
 }
 
+/* Líneas del botón cerrar */
+.mobile-menu-close span {
+  background-color: var(--primary-color);
+  height: 2px;
+  width: 20px;
+  position: absolute;
+}
+
+.mobile-menu-close span:first-child {
+  transform: rotate(45deg);
+}
+
+.mobile-menu-close span:last-child {
+  transform: rotate(-45deg);
+}
+
+/* Overlay mejorado */
 .menu-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 0;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 998;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
+  pointer-events: none;
+  transition: opacity 0.4s ease, height 0.4s ease, visibility 0s 0.4s;
 }
 
+/* Overlay abierto */
 .menu-overlay.open {
+  height: 100%;
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.4s ease, height 0.4s ease, visibility 0s;
 }
 
-.mobile-menu-close span {
-  background-color: var(--text-color);
-  border-radius: 4px;
-  height: 2px;
-  width: 100%;
-  position: absolute;
-  transition: all 0.35s cubic-bezier(0.65, 0, 0.35, 1);
-}
-
-.mobile-menu-close span:first-child {
-  transform: rotate(45deg);
-  background-color: var(--primary-color);
-}
-
-.mobile-menu-close span:last-child {
-  transform: rotate(-45deg);
-  background-color: var(--primary-color);
-}
-
-.mobile-menu-close:hover span:first-child {
-  transform: rotate(45deg) scale(1.1);
-}
-
-.mobile-menu-close:hover span:last-child {
-  transform: rotate(-45deg) scale(1.1);
-}
-
-.mobile-link {
+/* Botón CV en menú móvil */
+.mobile-cv-download {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 0.9rem 1.8rem;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  font-weight: 600;
+  border-radius: 10px;
+  margin-top: 1.5rem;
+  box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.25);
   text-decoration: none;
-  color: var(--text-color);
-  font-weight: 500;
-  padding: 1.5rem;
-  width: 100%;
-  text-align: center;
-  transition: all 0.25s ease;
-  position: relative;
-  overflow: hidden;
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-}
-
-.mobile-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-  transition: width 0.3s ease;
-  transform: translateX(0%);
-  margin: 0 auto;
-  right: 0;
-}
-
-.mobile-link:hover,
-.mobile-link.active {
-  background-color: rgba(var(--primary-color-rgb), 0.08);
-  color: var(--primary-color);
-}
-
-.mobile-link:hover::after,
-.mobile-link.active::after {
   width: 80%;
+  max-width: 280px;
+}
+
+/* Media queries mejorados */
+@media (max-width: 768px) {
+  /* Asegurar que el menú móvil esté correctamente oculto */
+  .mobile-menu {
+    display: none;
+  }
+  
+  .mobile-menu.open {
+    display: flex;
+  }
+  
+  /* Ajusta espaciado entre elementos móviles */
+  .mobile-link {
+    margin: 0.4rem 0;
+    padding: 0.8rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mobile-link {
+    font-size: 1.1rem;
+    padding: 0.7rem 1rem;
+    margin: 0.3rem 0;
+    width: 85%;
+  }
+  
+  .mobile-cv-download {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.95rem;
+    margin-top: 1.2rem;
+  }
+  
+  .mobile-menu-close {
+    top: 0.8rem;
+    right: 0.8rem;
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* Asegurarnos que el scroll funcione si el contenido es muy largo */
+.mobile-menu.open {
+  overflow-y: auto;
+  padding: 4rem 0;
 }
 
 /* ============================
@@ -606,5 +691,168 @@
   }
   100% {
     background-position: 0% 50%;
+  }
+}
+
+/* Añade estos estilos para compatibilidad con las nuevas animaciones */
+
+/* Animaciones de los enlaces del navegador */
+.nav-link {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.link-underline {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  border-radius: 2px;
+  z-index: 1;
+}
+
+/* Mejorar las transiciones de los botones de idioma */
+.lang-btn {
+  transform-origin: center;
+  transition: transform 0.3s cubic-bezier(0.17, 0.67, 0.83, 0.67),
+              background-color 0.3s ease,
+              color 0.3s ease;
+}
+
+.lang-btn.active-lang {
+  transform: scale(1);
+}
+
+/* Efecto de pulsación para los botones */
+.theme-btn, .hamburger, .mobile-menu-close {
+  transform-origin: center;
+  transition: transform 0.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+}
+
+.theme-btn:active, 
+.hamburger:active, 
+.mobile-menu-close:active {
+  transform: scale(0.92);
+}
+
+/* Animación para botón de cambio de tema */
+.theme-btn {
+  transition: transform 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67), 
+              background-color 0.3s ease,
+              color 0.3s ease;
+}
+
+/* Mejorar transición del overlay */
+.menu-overlay {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: opacity 0.4s cubic-bezier(0, 0.55, 0.45, 1),
+              visibility 0.4s cubic-bezier(0, 0.55, 0.45, 1);
+}
+
+/* ============================
+   Media queries mejorados para móviles
+============================ */
+
+/* Ajustes específicos para pantallas pequeñas */
+@media (max-width: 460px) {
+  /* Ocultar el botón de CV en el header */
+  .header .cv-download-btn {
+    display: none;
+  }
+  
+  /* Dar más espacio al logo */
+  .logo {
+    flex: 1;
+    font-size: 1rem;
+    max-width: none; /* Permitir que ocupe el espacio disponible */
+  }
+  
+  /* Ajustar espaciado en el header */
+  .header {
+    padding: 0.8rem;
+  }
+  
+  /* Reducir gap entre elementos de control */
+  .controls {
+    gap: 0.5rem;
+  }
+  
+  /* Hacer el selector de idioma más compacto */
+  .language-selector {
+    scale: 0.8;
+  }
+  
+  /* Ajustar el botón de tema */
+  .theme-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+  
+  /* Hacer la hamburguesa más prominente */
+  .hamburger {
+    min-width: 28px;
+    min-height: 22px;
+    margin-left: 8px;
+  }
+  
+  /* Asegurar que el menú mobile sea más accesible */
+  .mobile-menu.open {
+    padding: 5rem 0 3rem;
+  }
+  
+  /* Hacer el botón CV más destacado en el menú móvil */
+  .mobile-cv-download {
+    margin-top: 2rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 0.8rem 1.6rem;
+    font-size: 0.9rem;
+    width: 85%;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3);
+  }
+}
+
+/* Mejoras para el menú móvil en pantallas pequeñas */
+@media (max-width: 360px) {
+  .header {
+    padding: 0.7rem;
+  }
+  
+  /* Ajustes específicos para pantallas muy pequeñas */
+  .logo {
+    font-size: 0.82rem;
+  }
+  
+  .controls {
+    gap: 0.35rem;
+  }
+  
+  /* Hacer los enlaces del menú móvil más compactos */
+  .mobile-link {
+    font-size: 1.05rem;
+    padding: 0.6rem 0.9rem;
+    margin: 0.25rem 0;
+    width: 90%;
+  }
+}
+
+/* Media query para pantallas altas pero angostas (como algunos teléfonos) */
+@media (max-height: 700px) and (max-width: 400px) {
+  .mobile-menu.open {
+    padding: 4rem 0 2rem;
+  }
+  
+  .mobile-link {
+    margin: 0.2rem 0;
+    padding: 0.6rem;
+  }
+  
+  .mobile-cv-download {
+    margin-top: 1.2rem;
   }
 }

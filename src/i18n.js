@@ -238,15 +238,13 @@ const resources = {
         "sending": "Sending...",
         "sendMessage": "Send message",
         "errors": {
-            "nameRequired": "El nombre es obligatorio",
-            "emailRequired": "El email es obligatorio",
-            "emailInvalid": "El formato del email no es válido",
-            "messageRequired": "El mensaje es obligatorio",
-            "messageLength": "El mensaje debe tener al menos 10 caracteres"
+            "nameRequired": "The name is required",
+            "emailRequired": "The email is required",
+            "emailInvalid": "The email format is invalid",
+            "messageRequired": "The message is required",
+            "messageLength": "The message must be at least 10 characters long"
          }
       }
-
-      
     }
   },
   es: {
@@ -490,10 +488,17 @@ const resources = {
       // Form placeholders
       "form": {
         "namePlaceholder": "Tu nombre completo",
-        "emailPlaceholder": "tu@email.com",
+        "emailPlaceholder": "tuemail@email.com",
         "messagePlaceholder": "Cuéntame sobre tu proyecto o consulta",
         "sending": "Enviando...",
-        "sendMessage": "Enviar mensaje"
+        "sendMessage": "Enviar mensaje",
+        "errors": {
+            "nameRequired": "El nombre es obligatorio",
+            "emailRequired": "El email es obligatorio",
+            "emailInvalid": "El formato del email no es válido",
+            "messageRequired": "El mensaje es obligatorio",
+            "messageLength": "El mensaje debe tener al menos 10 caracteres"
+         }
       }
     }
   }

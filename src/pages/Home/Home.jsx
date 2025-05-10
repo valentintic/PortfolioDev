@@ -1,4 +1,5 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
+import Lenis from '@studio-freight/lenis';
 import emailjs from '@emailjs/browser';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { 
@@ -603,34 +604,37 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
   }, [technicalSkillsData, skillIconsMap]);
 
   useEffect(() => {
-    const sections = document.querySelectorAll('section[id]');
-    
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const id = entry.target.getAttribute('id');
-            setActiveSection(id);
-          }
-        });
-      },
-      { 
-        threshold: 0.2, // Bajamos el threshold para mejor detección
-        rootMargin: '-50px 0px -50px 0px' // Ajustamos el margen para mejor precisión
-      }
-    );
-    
-    sections.forEach(section => {
-      observer.observe(section);
-    });
-    
-    return () => {
-      sections.forEach(section => {
-        observer.unobserve(section);
+  const sections = document.querySelectorAll('section[id]');
+  
+  const lenis = window.lenis || new Lenis();
+  window.lenis = lenis;
+  
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          setActiveSection(id);
+        }
       });
-      observer.disconnect();
-    };
-  }, []);
+    },
+    { 
+      threshold: 0.2,
+      rootMargin: '-50px 0px -50px 0px'
+    }
+  );
+  
+  sections.forEach(section => {
+    observer.observe(section);
+  });
+  
+  return () => {
+    sections.forEach(section => {
+      observer.unobserve(section);
+    });
+    observer.disconnect();
+  };
+}, []);
 
   const navigationSections = useMemo(() => 
     ['hero', 'about', 'projects', 'experience', 'contact'], 
@@ -684,16 +688,26 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
       className={`home-container ${darkMode ? 'dark' : 'light'}`}
     >
       <nav className="section-navigator" aria-label="Section navigation">
-        {navigationSections.map((section) => (
-          <a 
-            key={section}
-            href={`#${section}`}
-            className={`nav-dot ${activeSection === section ? 'active' : ''}`}
-            aria-label={`Navigate to ${t(section.charAt(0).toUpperCase() + section.slice(1))} section`}
-            title={t(section.charAt(0).toUpperCase() + section.slice(1))}
-          />
-        ))}
-      </nav>
+  {navigationSections.map((section) => (
+    <a 
+      key={section}
+      href={`#${section}`}
+      onClick={(e) => {
+        e.preventDefault();
+        const element = document.getElementById(section);
+        if (element && window.lenis) {
+          window.lenis.scrollTo(element, {
+            offset: 80,
+            duration: 1.2
+          });
+        }
+      }}
+      className={`nav-dot ${activeSection === section ? 'active' : ''}`}
+      aria-label={`Navigate to ${t(section.charAt(0).toUpperCase() + section.slice(1))} section`}
+      title={t(section.charAt(0).toUpperCase() + section.slice(1))}
+    />
+  ))}
+</nav>
 
       <motion.section 
         id="hero"
@@ -1094,7 +1108,6 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
                   onChange={handleInputChange}
                   className={`form-input ${errors.name ? 'input-error' : ''}`}
                   placeholder={t('form.namePlaceholder')}
-                  required
                 />
                 {errors.name && <p className="error-message">{errors.name}</p>}
               </div>
@@ -1111,7 +1124,6 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
                   onChange={handleInputChange}
                   className={`form-input ${errors.email ? 'input-error' : ''}`}
                   placeholder={t('form.emailPlaceholder')}
-                  required
                 />
                 {errors.email && <p className="error-message">{errors.email}</p>}
               </div>
@@ -1127,7 +1139,6 @@ const publicKey = 'FKmGldsyDGBMAF9vj';
                   onChange={handleInputChange}
                   className={`form-textarea ${errors.message ? 'input-error' : ''}`}
                   placeholder={t('form.messagePlaceholder')}
-                  required
                 ></textarea>
                 {errors.message && <p className="error-message">{errors.message}</p>}
               </div>

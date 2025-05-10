@@ -5,6 +5,8 @@ import Router from './Router';
 import GalaxyCanvas from './components/GalaxyCanvas';
 import './App.css';
 import './i18n'; // Configuración de i18next
+import { useSmoothScroll } from './components/SmothScroll';
+import { useLenis } from './hooks/useLenis';
 
 const getSystemTheme = () => {
   return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -19,7 +21,8 @@ function App() {
   const [darkMode, setDarkMode] = useState(getDefaultTheme());
   const spaceRef = useRef(null);
   const [brightStarsGenerated, setBrightStarsGenerated] = useState(false);
-  
+    
+  useLenis();
   // Efecto para el movimiento parallax de las estrellas
   useEffect(() => {
     // Solo aplicar parallax en dispositivos no móviles para mejor rendimiento
