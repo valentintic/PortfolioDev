@@ -13,7 +13,7 @@ import gsap from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 import { TextPlugin } from 'gsap/TextPlugin';
 
-import Lenis from '@studio-freight/lenis';
+import Lenis from 'lenis';
 import { scrollToSection } from '../../hooks/useLenis';
 
 // Registramos los plugins de GSAP
